@@ -1,4 +1,5 @@
 ﻿using WarehouseManagement.Domain.Common;
+using WarehouseManagement.Domain.Enums;
 
 namespace WarehouseManagement.Domain.Entities;
 

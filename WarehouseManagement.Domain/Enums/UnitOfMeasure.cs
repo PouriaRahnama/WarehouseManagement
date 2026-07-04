@@ -1,4 +1,4 @@
-﻿namespace WarehouseManagement.Domain.Entities;
+﻿namespace WarehouseManagement.Domain.Enums;
 
 public enum UnitOfMeasure
 {

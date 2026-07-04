@@ -13,6 +13,8 @@ namespace WarehouseManagement.Infrastructure.MapConfig
             builder.Property(x => x.Quantity)
                  .IsRequired();
 
+            builder.HasIndex(x => x.ProductId);
+
             // Relations
             builder.HasOne(x => x.Product)
                 .WithMany(x => x.StockBalances)
