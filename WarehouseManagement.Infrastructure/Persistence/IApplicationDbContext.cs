@@ -16,6 +16,10 @@ public interface IApplicationDbContext : IDisposable
 
     #endregion
     DbSet<Product> Products { get; set; }
+    DbSet<StockBalance> StockBalances { get; set; }
+    DbSet<StockDocument> StockDocuments { get; set; }
+    DbSet<StockDocumentItem> StockDocumentItems { get; set; }
+    DbSet<Warehouse> Warehouses { get; set; }
     DbSet<User> Users { get; set; }
     DbSet<UserRefreshToken> UserRefreshTokens { get; set; }
 }

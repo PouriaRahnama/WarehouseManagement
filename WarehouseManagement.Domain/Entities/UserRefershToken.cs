@@ -9,7 +9,7 @@ public class UserRefreshToken : BaseEntity
     public Guid UserId { get; set; }
     public string RefreshToken { get; set; }
     public DateTime ExpireDate { get; set; }
-    public bool IsRevoked { get; set; }
+    public bool IsRevoked { get; set; } = false;
     public DateTime? RevokedDate { get; set; }
     public string? DeviceName { get; set; }
 
