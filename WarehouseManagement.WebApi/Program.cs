@@ -1,10 +1,8 @@
 using System.Reflection;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 using WarehouseManagement.Application.Common;
 using WarehouseManagement.Framework.Common;
 using WarehouseManagement.Infrastructure.Common;
-using WarehouseManagement.Infrastructure.Persistence;
 using WarehouseManagement.WebApi.Configuration;
 using WarehouseManagement.WebApi.Middlewares;
 
@@ -82,11 +80,11 @@ app.UseAuthentication();
 app.UseAuthorization();
 app.MapControllers();
 
-using (var scope = app.Services.CreateScope())
-{
-    var db = scope.ServiceProvider.GetRequiredService<SqlServerApplicationDbContext>();
-    db.Database.Migrate();
-}
+//using (var scope = app.Services.CreateScope())
+//{
+//    var db = scope.ServiceProvider.GetRequiredService<SqlServerApplicationDbContext>();
+//    db.Database.Migrate();
+//}
 
 app.UseSerilogRequestLogging();
 app.Run();

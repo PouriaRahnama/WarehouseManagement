@@ -12,13 +12,15 @@ namespace WarehouseManagement.Infrastructure.Common
             #region DI ( Registeration Services )
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IUserRefreshTokenRepository, UserRefreshTokenRepository>();
+            services.AddScoped<IProductRepository, ProductRepository>();
+            services.AddScoped<IWarehouseRepository, WarehouseRepository>();
+            services.AddScoped<IStockBalanceRepository, StockBalanceRepository>();
+            services.AddScoped<IStockDocumentRepository, StockDocumentRepository>();
+            services.AddScoped<IStockDocumentItemRepository, StockDocumentItemRepository>();
 
             services.AddScoped<IUnitOfWork, UnitOfWork.UnitOfWork>();
-
             services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
             #endregion
-
-
         }
     }
 }
