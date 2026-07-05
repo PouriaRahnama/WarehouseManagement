@@ -1,4 +1,5 @@
-﻿using WarehouseManagement.Domain.Entities;
+﻿using Microsoft.EntityFrameworkCore.Infrastructure;
+using WarehouseManagement.Domain.Entities;
 
 namespace WarehouseManagement.Infrastructure.Persistence;
 
@@ -8,7 +9,7 @@ public interface IApplicationDbContext : IDisposable
 
     DbSet<TEntity> Set<TEntity>() where TEntity : class;
     int SaveChanges();
-
+    DatabaseFacade Database { get; }
     EntityEntry<TEntity> Entry<TEntity>(TEntity entity)
         where TEntity : class;
 

@@ -2,7 +2,8 @@
 {
     public enum StockDocumentStatus
     {
-        Draft = 10,
-        Posted = 20
+        Draft = 10,  
+        Wait = 20,
+        Posted = 30,
     }
 }

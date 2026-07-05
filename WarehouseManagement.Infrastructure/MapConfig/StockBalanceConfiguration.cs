@@ -15,6 +15,10 @@ namespace WarehouseManagement.Infrastructure.MapConfig
 
             builder.HasIndex(x => x.ProductId);
 
+            builder.Property(x => x.RowVersion)
+                 .IsRowVersion()
+                 .IsConcurrencyToken();
+
             // Relations
             builder.HasOne(x => x.Product)
                 .WithMany(x => x.StockBalances)
