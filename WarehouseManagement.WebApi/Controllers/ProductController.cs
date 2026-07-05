@@ -1,8 +1,4 @@
-﻿using WarehouseManagement.Application.Dtos.ProductDtos;
-using WarehouseManagement.Framework.Common;
-using WarehouseManagement.Framework.GenericFilters;
-
-namespace WarehouseManagement.WebApi.Controllers
+﻿namespace WarehouseManagement.WebApi.Controllers
 {
     public class ProductController : ApiBaseController
     {

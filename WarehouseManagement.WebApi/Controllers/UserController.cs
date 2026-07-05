@@ -1,9 +1,4 @@
-﻿using WarehouseManagement.Application.Dtos.UserDtos;
-using WarehouseManagement.Application.Dtos.UserRefreshTokenDto;
-using WarehouseManagement.Framework.Common;
-using WarehouseManagement.Framework.GenericFilters;
-
-namespace WarehouseManagement.WebApi.Controllers
+﻿namespace WarehouseManagement.WebApi.Controllers
 {
     public class UserController : ApiBaseController
     {

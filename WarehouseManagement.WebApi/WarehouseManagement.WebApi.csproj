@@ -25,6 +25,10 @@
   <ItemGroup>
     <ProjectReference Include="..\WarehouseManagement.Application\WarehouseManagement.Application.csproj" />
   </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Logs\Info\" />
+  </ItemGroup>
 	<PropertyGroup>
 		<GenerateDocumentationFile>true</GenerateDocumentationFile>
 		<NoWarn>$(NoWarn);1591</NoWarn>

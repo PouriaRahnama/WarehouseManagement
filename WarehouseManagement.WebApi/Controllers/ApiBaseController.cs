@@ -1,5 +1,4 @@
 using WarehouseManagement.Application.Interfaces;
-
 namespace WarehouseManagement.WebApi.Controllers;
 
 [ApiController]
@@ -26,6 +25,11 @@ public class ApiBaseController : ControllerBase
     private IUserRefreshTokenService userRefreshTokenService;
     protected IUserRefreshTokenService _userRefreshTokenService => userRefreshTokenService
         ??= HttpContext.RequestServices.GetRequiredService<IUserRefreshTokenService>();
+
+
+    private IWarehouseService warehoseService;
+    protected IWarehouseService _warehoseService => warehoseService
+        ??= HttpContext.RequestServices.GetRequiredService<IWarehouseService>();
 
 }
 

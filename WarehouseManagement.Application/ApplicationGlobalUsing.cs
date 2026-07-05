@@ -30,6 +30,8 @@ global using WarehouseManagement.Application.Dtos.UserDtos;
 global using WarehouseManagement.Application.Common;
 global using WarehouseManagement.Application.Dtos.UserRefreshTokenDto;
 global using WarehouseManagement.Application.Dtos.WarehouseDtos;
+global using WarehouseManagement.Application.Services;
+
 
 
 

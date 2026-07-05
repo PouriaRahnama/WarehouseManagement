@@ -1,8 +1,4 @@
-﻿using WarehouseManagement.Application.Interfaces;
-using WarehouseManagement.Application.Services;
-using WarehouseManagement.Framework.Common;
-
-namespace WarehouseManagement.Application.Common
+﻿namespace WarehouseManagement.Application.Common
 {
     public static class ApplicationStartup
     {
@@ -20,6 +16,7 @@ namespace WarehouseManagement.Application.Common
 
             services.AddScoped<IUserRefreshTokenService, UserRefreshTokenService>();
             services.AddScoped<IUserService, UserService>();
+            services.AddScoped<IWarehouseService, WarehouseService>();
             services.AddScoped<IProductService, ProductService>();
             services.AddSingleton<JwtTokenUtility>();
             #endregion

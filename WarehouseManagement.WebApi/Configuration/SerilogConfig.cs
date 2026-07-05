@@ -28,7 +28,7 @@ public static class SerilogConfig
                 .Enrich.With(new UserInfoEnricher(services.GetRequiredService<IHttpContextAccessor>()))
                 // Console log (text)
                 .WriteTo.Console(outputTemplate:
-                    "[{Timestamp:HH:mm:ss} {Level:u3}] {Message:lj} (User: {UserName}, IP: {IPAddress}){NewLine}{Exception}")
+                    "[{Timestamp:HH:mm:ss} {Level:u3}] {Message:lj} {NewLine}{Exception}")
 
                 // Information logs - JSON
                 .WriteTo.Logger(lc => lc
