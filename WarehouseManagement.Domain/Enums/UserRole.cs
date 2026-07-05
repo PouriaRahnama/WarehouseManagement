@@ -2,8 +2,8 @@
 
 public enum UserRole
 {
-    Admin = 10,
-    Operator = 20,
-    Viewer = 30
+    [Display(Name = "مدیر سیستم")] Admin = 10,
+    [Display(Name = "اپراتور")] Operator = 20,
+    [Display(Name = "کاربر عادی‌")] Viewer = 30
 }
 

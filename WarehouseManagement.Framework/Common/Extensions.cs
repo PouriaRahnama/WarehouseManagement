@@ -169,15 +169,18 @@ public static class Extensions
 
         return imageBytes;
     }
-    public static string GetDisplayName(Enum enumValue)
+    public static string GetDisplayName(this Enum value)
     {
-        var displayAttribute = enumValue.GetType()
-            .GetField(enumValue.ToString())
-            .GetCustomAttributes(typeof(DisplayAttribute), false)
-            .FirstOrDefault() as DisplayAttribute;
+        var member = value.GetType().GetMember(value.ToString()).FirstOrDefault();
 
-        return displayAttribute?.Name ?? enumValue.ToString();
+        if (member == null)
+            return value.ToString();
+
+        var display = member.GetCustomAttribute<DisplayAttribute>();
+
+        return display?.Name ?? value.ToString();
     }
+
     public static List<string> GetAllClassName(this Type type)
     {
         var _lista = new List<Assembly>();
@@ -245,5 +248,7 @@ public static class Extensions
 
         return userAgent;
     }
+
+
 }
 

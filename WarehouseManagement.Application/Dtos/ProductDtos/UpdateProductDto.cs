@@ -4,5 +4,7 @@
     {
         [Required(ErrorMessage = "شناسه محصول الزامی است.")]
         public Guid ProductId { get; set; }
+
+        public bool IsActive { get; set; }
     }
 }

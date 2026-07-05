@@ -1,6 +1,4 @@
-﻿using WarehouseManagement.Application.Dtos.ProductDtos;
-
-namespace WarehouseManagement.Application.GridifyMappers
+﻿namespace WarehouseManagement.Application.GridifyMappers
 {
     public class ProductGridifyMapper : GridifyMapper<GetAllProductsDto>
     {

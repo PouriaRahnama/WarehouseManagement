@@ -1,7 +1,4 @@
-﻿using System.ComponentModel;
-using System.ComponentModel.DataAnnotations;
-
-namespace WarehouseManagement.Application.Dtos.UserDtos
+﻿namespace WarehouseManagement.Application.Dtos.UserDtos
 {
     public class DeleteUserAccountDto
     {

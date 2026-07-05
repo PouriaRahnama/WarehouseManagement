@@ -1,7 +1,4 @@
-﻿using WarehouseManagement.Application.Dtos.UserDtos;
-using WarehouseManagement.Application.Dtos.UserRefreshTokenDto;
-
-namespace WarehouseManagement.Application.Interfaces
+﻿namespace WarehouseManagement.Application.Interfaces
 {
     public interface IUserRefreshTokenService
     {

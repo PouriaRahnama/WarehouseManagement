@@ -1,7 +1,4 @@
-﻿using WarehouseManagement.Application.Dtos.UserDtos;
-using WarehouseManagement.Framework.GenericFilters;
-
-namespace WarehouseManagement.Application.Interfaces
+﻿namespace WarehouseManagement.Application.Interfaces
 {
     public interface IUserService
     {

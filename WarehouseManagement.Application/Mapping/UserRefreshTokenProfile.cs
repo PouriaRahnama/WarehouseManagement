@@ -1,7 +1,4 @@
-﻿using WarehouseManagement.Application.Dtos.UserRefreshTokenDto;
-using WarehouseManagement.Domain.Entities;
-
-namespace WarehouseManagement.Application.Mapping
+﻿namespace WarehouseManagement.Application.Mapping
 {
     public class UserRefreshTokenProfile : Profile
     {
