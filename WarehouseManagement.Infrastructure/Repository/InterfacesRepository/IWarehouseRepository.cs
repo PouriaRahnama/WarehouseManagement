@@ -2,7 +2,7 @@
 
 namespace WarehouseManagement.Infrastructure.Repository.InterfacesRepository
 {
-    internal interface IWarehouseRepository : IRepository<Warehouse>
+    public interface IWarehouseRepository : IRepository<Warehouse>
     {
     }
 }

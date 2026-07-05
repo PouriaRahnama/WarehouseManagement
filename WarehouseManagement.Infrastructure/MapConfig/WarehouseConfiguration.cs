@@ -19,6 +19,7 @@ namespace WarehouseManagement.Infrastructure.MapConfig
                 .HasMaxLength(200);
 
             builder.Property(x => x.Location)
+                .IsRequired()
                 .HasMaxLength(300);
 
             builder.HasIndex(x => x.Code)

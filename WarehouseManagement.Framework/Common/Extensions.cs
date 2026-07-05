@@ -208,6 +208,10 @@ public static class Extensions
     {
         return $"{prefix}-{DateTime.UtcNow:yyyyMMdd}-{Guid.NewGuid().ToString("N")[..6].ToUpper()}";
     }
+    public static string GenerateWarehoseCode(this string prefix)
+    {
+        return $"{prefix}-{DateTime.UtcNow:yyyyMMdd}-{Guid.NewGuid().ToString("N")[..6].ToUpper()}";
+    }
     public static bool IsPersian(this string input)
     {
         if (string.IsNullOrWhiteSpace(input))
