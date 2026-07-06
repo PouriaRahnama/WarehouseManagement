@@ -57,5 +57,40 @@
             if (newStockBalances.Any()) await _stockBalanceRepository.CreateRangeAsync(newStockBalances);
         }
 
+        public async Task TransferStockBalanceAsync(ICollection<StockDocumentItem> stockDocumentItems, Guid toWarehouseId, Guid fromWarehouseId)
+        {
+            var productIds = stockDocumentItems.Select(x => x.ProductId).ToList();
+
+            var stockBalances = await _stockBalanceRepository.Entities
+                .Where(x => (x.WarehouseId == fromWarehouseId || x.WarehouseId == toWarehouseId) &&
+                    productIds.Contains(x.ProductId)).ToListAsync();
+
+            var newStockBalances = new List<StockBalance>();
+            foreach (var item in stockDocumentItems)
+            {
+                var fromBalance = stockBalances.FirstOrDefault(x => x.WarehouseId == fromWarehouseId &&
+                    x.ProductId == item.ProductId);
+
+                if (fromBalance == null) throw new BusinessException("موجودی کالا در انبار مبدا یافت نشد.");
+                if (fromBalance.Quantity < item.Quantity) throw new BusinessException($"موجودی کالا {item.ProductId} کافی نیست.");
+
+                fromBalance.Quantity -= item.Quantity;
+
+                var toBalance = stockBalances.FirstOrDefault(x => x.WarehouseId == toWarehouseId &&
+                    x.ProductId == item.ProductId);
+       
+                if (toBalance != null)               
+                    toBalance.Quantity += item.Quantity;             
+                else
+                {
+                    toBalance = _mapper.Map<StockBalance>((item, toWarehouseId));
+                    newStockBalances.Add(toBalance);
+                }
+            }
+
+            await _stockBalanceRepository.CreateRangeAsync(newStockBalances);
+
+        }
+
     }
 }

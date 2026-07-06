@@ -23,23 +23,22 @@ namespace WarehouseManagement.Application.Services
             _stockDocumentRepository = stockDocumentRepository;
             _stockDocumentItemRepository = stockDocumentItemRepository;
         }
+     
 
-
-        public async Task<Guid> CreateEntryAsync(CreateInStockDocumentDto createInStockDocumentDto)
+        public async Task<Guid> CreateInStockDocumentAsync(CreateInStockDocumentDto createInStockDocumentDto)
         {
             var document = _mapper.Map<StockDocument>(createInStockDocumentDto);
             await _stockDocumentRepository.CreateAsync(document);
-            var items = _mapper.Map<List<StockDocumentItem>>(createInStockDocumentDto.Items, opt =>
-            {
-                opt.Items["StockDocumentId"] = document.Id;
-            });
 
+            var items = _mapper.Map<List<StockDocumentItem>>(createInStockDocumentDto.Items, opt =>
+            { opt.Items["StockDocumentId"] = document.Id;});
             await _stockDocumentItemRepository.CreateRangeAsync(items);
+
             await _unitOfWork.SaveChangesAsync();
             return document.Id;
         }
 
-        public async Task<Guid> CreateExitAsync(CreateOutStockDocumentDto createOutStockDocumentDto)
+        public async Task<Guid> CreateOutStockDocumentAsync(CreateOutStockDocumentDto createOutStockDocumentDto)
         {
             var document = _mapper.Map<StockDocument>(createOutStockDocumentDto);
             await _stockDocumentRepository.CreateAsync(document);
@@ -53,7 +52,7 @@ namespace WarehouseManagement.Application.Services
             return document.Id;
         }
 
-        public async Task<Guid> CreateTransferAsync(CreateTransferStockDocumentDto createTransferStockDocumentDto)
+        public async Task<Guid> CreateTransferStockDocumentAsync(CreateTransferStockDocumentDto createTransferStockDocumentDto)
         {
             var document = _mapper.Map<StockDocument>(createTransferStockDocumentDto);
             await _stockDocumentRepository.CreateAsync(document);
@@ -70,8 +69,7 @@ namespace WarehouseManagement.Application.Services
 
         public async Task<bool> PostAsync(Guid stockDocumentId)
         {
-            var document = await _stockDocumentRepository.Entities
-                .Include(x => x.StockDocumentItems)
+            var document = await _stockDocumentRepository.EntitiesAsNoTracking
                 .FirstOrDefaultAsync(x => x.Id == stockDocumentId);
 
             if (document == null) throw new NotFoundException("سند یافت نشد.");
@@ -88,7 +86,7 @@ namespace WarehouseManagement.Application.Services
                     break;
 
                 case StockDocumentType.Transfer:
-                   // await TransferWarehouseStockWhenPostedAsync(stockDocumentId);
+                    await TransferWarehouseStockWhenPostedAsync(stockDocumentId);
                     break;
 
                 default:
@@ -98,7 +96,41 @@ namespace WarehouseManagement.Application.Services
             return true;
         }
 
-        private async Task<bool> IncreaseWarehouseStockWhenPostedAsync(Guid stockDocumentId)
+        private async Task TransferWarehouseStockWhenPostedAsync(Guid stockDocumentId)
+        {
+            await _unitOfWork.BeginTransactionAsync();
+            try
+            {
+                var document = await _stockDocumentRepository.Entities
+                     .Include(x => x.StockDocumentItems)
+                     .FirstOrDefaultAsync(x => x.Id == stockDocumentId);
+
+                if (document == null) throw new NotFoundException("سند یافت نشد.");
+                if (document.Status != StockDocumentStatus.Wait) throw new BusinessException("سند قبلاً پردازش شده است.");
+                if (!document.ToWarehouseId.HasValue) throw new BusinessException("انبار مقصد مشخص نشده است.");
+                if (!document.FromWarehouseId.HasValue) throw new BusinessException("انبار مبدا مشخص نشده است.");
+
+                await _stockBalanceService.TransferStockBalanceAsync(document.StockDocumentItems,
+                    document.ToWarehouseId.Value, document.FromWarehouseId.Value);
+
+                document.Status = StockDocumentStatus.Posted;
+
+                await _unitOfWork.SaveChangesAsync();
+                await _unitOfWork.CommitAsync();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                await _unitOfWork.RollbackAsync();
+                throw new BusinessException("موجودی همزمان تغییر کرده، دوباره تلاش کنید.");
+            }
+            catch (Exception ex)
+            {
+                await _unitOfWork.RollbackAsync();
+                throw new BusinessException($"عملیات با خطا مواجه شد.");
+            }
+        }
+
+        private async Task IncreaseWarehouseStockWhenPostedAsync(Guid stockDocumentId)
         {
             await _unitOfWork.BeginTransactionAsync();
             try
@@ -117,7 +149,6 @@ namespace WarehouseManagement.Application.Services
 
                 await _unitOfWork.SaveChangesAsync();
                 await _unitOfWork.CommitAsync();
-                return true;
             }
             catch (DbUpdateConcurrencyException)
             {
@@ -131,7 +162,7 @@ namespace WarehouseManagement.Application.Services
             }
         }
 
-        private async Task<bool> DecreaseWarehouseStockWhenPostedAsync(Guid stockDocumentId)
+        private async Task DecreaseWarehouseStockWhenPostedAsync(Guid stockDocumentId)
         {
             await _unitOfWork.BeginTransactionAsync();
             try
@@ -150,7 +181,6 @@ namespace WarehouseManagement.Application.Services
 
                 await _unitOfWork.SaveChangesAsync();
                 await _unitOfWork.CommitAsync();
-                return true;
             }
             catch (DbUpdateConcurrencyException)
             {
