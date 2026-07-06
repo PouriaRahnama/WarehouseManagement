@@ -1,5 +1,5 @@
-﻿namespace WarehouseManagement.Framework.GenericFilters
-{
+﻿namespace WarehouseManagement.Framework.GenericFilters;
+
     public class SearchQueryRequest : GridifyQuery
     {
         public SearchQueryRequest(int page = 1, int pageSize = 8, string orderBy = "", string filter = "")
@@ -10,4 +10,4 @@
             Page = page;
         }
     }
-}
+

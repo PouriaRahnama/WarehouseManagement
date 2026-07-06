@@ -1,7 +1,6 @@
-﻿namespace WarehouseManagement.Framework.Common
+﻿namespace WarehouseManagement.Framework.Common;
+
+public class BusinessException : Exception
 {
-    public class BusinessException : Exception
-    {
-        public BusinessException(string message) : base(message) { }
-    }
+    public BusinessException(string message) : base(message) { }
 }

@@ -1,27 +1,25 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿namespace WarehouseManagement.Framework.Common;
 
-namespace WarehouseManagement.Framework.Common
+public class ApiBehaviorExtension
 {
-    public class ApiBehaviorExtension
+    public static BadRequestObjectResult HandleValidationError(ActionContext context)
     {
-        public static BadRequestObjectResult HandleValidationError(ActionContext context)
-        {
-            var errors = context.ModelState
-                .Where(x => x.Value.Errors.Count > 0)
-                .ToDictionary(
-                    kvp => kvp.Key,
-                    kvp => kvp.Value.Errors.Select(e => e.ErrorMessage).ToArray()
-                );
-
-            var response = OkApiResult<object>.Fail(
-                null,
-                StatusCodes.Status400BadRequest,
-                "اطلاعات ارسالی معتبر نیست"
+        var errors = context.ModelState
+            .Where(x => x.Value.Errors.Count > 0)
+            .ToDictionary(
+                kvp => kvp.Key,
+                kvp => kvp.Value.Errors.Select(e => e.ErrorMessage).ToArray()
             );
 
-            response.Data = errors;
+        var response = OkApiResult<object>.Fail(
+            null,
+            StatusCodes.Status400BadRequest,
+            "اطلاعات ارسالی معتبر نیست"
+        );
 
-            return new BadRequestObjectResult(response);
-        }
+        response.Data = errors;
+
+        return new BadRequestObjectResult(response);
     }
 }
+

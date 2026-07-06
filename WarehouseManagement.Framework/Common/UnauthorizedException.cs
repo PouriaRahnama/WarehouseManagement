@@ -1,7 +1,6 @@
-﻿namespace WarehouseManagement.Framework.Common
+﻿namespace WarehouseManagement.Framework.Common;
+
+public class UnauthorizedException : Exception
 {
-    public class UnauthorizedException : Exception
-    {
-        public UnauthorizedException(string message) : base(message) { }
-    }
+    public UnauthorizedException(string message) : base(message) { }
 }

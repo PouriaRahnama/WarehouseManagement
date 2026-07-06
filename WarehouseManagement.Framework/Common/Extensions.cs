@@ -1,7 +1,4 @@
-﻿using System.Security.Cryptography;
-using System.Text.RegularExpressions;
-
-namespace WarehouseManagement.Framework.Common;
+﻿namespace WarehouseManagement.Framework.Common;
 
 public static class Extensions
 {
