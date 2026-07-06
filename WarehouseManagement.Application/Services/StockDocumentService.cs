@@ -23,6 +23,8 @@
         }
      
 
+
+
         public async Task<Guid> CreateInStockDocumentAsync(CreateInStockDocumentDto createInStockDocumentDto)
         {
             var document = _mapper.Map<StockDocument>(createInStockDocumentDto);

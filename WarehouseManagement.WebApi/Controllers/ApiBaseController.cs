@@ -35,5 +35,10 @@ public class ApiBaseController : ControllerBase
     protected IStockDocumentService _stockDocumentService => stockDocumentService
         ??= HttpContext.RequestServices.GetRequiredService<IStockDocumentService>();
 
+
+    private IStockBalanceService stockBalanceService;
+    protected IStockBalanceService _stockBalanceService => stockBalanceService
+        ??= HttpContext.RequestServices.GetRequiredService<IStockBalanceService>();
+
 }
 

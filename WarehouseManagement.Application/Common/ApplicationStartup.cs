@@ -17,6 +17,8 @@
             services.AddScoped<IUserRefreshTokenService, UserRefreshTokenService>();
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IWarehouseService, WarehouseService>();
+            services.AddScoped<IStockBalanceService, StockBalanceService>();
+            services.AddScoped<IStockDocumentService, StockDocumentService>();
             services.AddScoped<IProductService, ProductService>();
             services.AddSingleton<JwtTokenUtility>();
             #endregion

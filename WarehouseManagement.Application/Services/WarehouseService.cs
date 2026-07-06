@@ -13,6 +13,31 @@
             _unitOfWork = unitOfWork;
             _mapper = mapper;
         }
+        public async Task<SearchQueryResponse<WarehouseStockReportsDto>> GetWarehouseStockReportsAsync(FilterWarehouseStockReportsDto queryParams)
+        {
+            var mapper = new WarehouseStockReportsGridifyMapper();
+
+            var query = _warehouseRepository.EntitiesAsNoTracking
+                .Select(w => new WarehouseStockReportsDto
+                {
+                    WarehouseId = w.Id,
+                    WarehouseName = w.Name,
+                    CreatedDateTime = EF.Property<DateTime>(w, "CreatedDateTime"),
+                    Products = w.StockBalances.Select(sb => new WarehouseProductDto
+                    {
+                        ProductId = sb.ProductId,
+                        ProductName = sb.Product.Name,
+                        ProductCode = sb.Product.Code,
+                        Quantity = sb.Quantity,
+                        MinimumStock = sb.Product.MinimumStock
+                    })
+                });
+
+            var gridifyResult = await query.GridifyQueryableAsync(queryParams, mapper);
+            var paging = new Paging<WarehouseStockReportsDto>(gridifyResult.Count, gridifyResult.Query);
+
+            return new SearchQueryResponse<WarehouseStockReportsDto>(queryParams, paging);
+        }
 
         public async Task<Guid> CreateAsync(CreateWarehouseDto createWarehouseDto)
         {

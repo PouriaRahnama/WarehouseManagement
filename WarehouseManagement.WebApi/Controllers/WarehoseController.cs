@@ -4,6 +4,16 @@
     {
         public WarehoseController(ILogger<ApiBaseController> logger) : base(logger) { }
 
+        /// <summary>
+        /// واکشی موجودی کالا ها با فیلتر 
+        /// </summary>
+        [HttpGet]
+        [DisplayName("واکشی موجودی کالاها با فیلتر ")]
+        [Authorize(Policy = Policies.Viewer)]
+        public async Task<OkApiResult<SearchQueryResponse<WarehouseStockReportsDto>>> GetStockReports([FromQuery] FilterWarehouseStockReportsDto QueryParams)
+        {
+            return OkApiResult<SearchQueryResponse<WarehouseStockReportsDto>>.Ok(await _warehoseService.GetWarehouseStockReportsAsync(QueryParams));
+        }
 
         /// <summary>
         /// واکشی تمام انبارها

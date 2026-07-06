@@ -2,6 +2,7 @@
 {
     public interface IWarehouseService
     {
+        Task<SearchQueryResponse<WarehouseStockReportsDto>> GetWarehouseStockReportsAsync(FilterWarehouseStockReportsDto queryParams);
         Task<SearchQueryResponse<GetAllWarehousesDto>> GetAllAsync(FilterWarehousesDto QueryParams);
         Task<SearchQueryResponse<GetWarehouseNamesDto>> GetWarehouseNamesAsync(FilterWarehousesDto QueryParams);
         Task<GetWarehouseDetailsDto> GetByIdAsync(Guid warehouseId);

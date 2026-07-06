@@ -35,6 +35,7 @@
                 .ForMember(dest => dest.Code, opt => opt.Ignore())
                 .ForMember(dest => dest.Location, opt => opt.MapFrom(src => src.Location))
                 .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Name));
+
         }
     }
 }

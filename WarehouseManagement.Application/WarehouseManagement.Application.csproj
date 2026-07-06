@@ -13,5 +13,8 @@
   <ItemGroup>
     <ProjectReference Include="..\WarehouseManagement.Infrastructure\WarehouseManagement.Infrastructure.csproj" />
   </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Dtos\StockBalanceDtos\" />
+  </ItemGroup>
 
 </Project>
