@@ -9,10 +9,4 @@
         public string UnitOfMeasure { get; set; }
         public bool IsActive { get; set; }
     }
-
-    public class GetProductsDto
-    {
-        public Guid ProductId { get; set; }
-        public string Name { get; set; }
-    }
 }

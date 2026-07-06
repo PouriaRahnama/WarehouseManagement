@@ -1,6 +1,4 @@
-﻿using WarehouseManagement.Application.Dtos.StockDocumentDtos;
-
-namespace WarehouseManagement.WebApi.Controllers
+﻿namespace WarehouseManagement.WebApi.Controllers
 {
 
     public class StockBalanceController : ApiBaseController
@@ -14,6 +12,7 @@ namespace WarehouseManagement.WebApi.Controllers
         /// </summary>
         [HttpPost]
         [DisplayName(" ایجاد سند ورود کالا")]
+        [Authorize(Policy = Policies.Operator)]
         public async Task<OkApiResult<Guid>> CreateIn([FromBody] CreateInStockDocumentDto createInStockDocumentDto)
         {
             return OkApiResult<Guid>.Ok(await _stockDocumentService.CreateInStockDocumentAsync(createInStockDocumentDto));
@@ -24,6 +23,7 @@ namespace WarehouseManagement.WebApi.Controllers
         /// </summary>
         [HttpPost]
         [DisplayName(" ایجاد سند خروج کالا")]
+        [Authorize(Policy = Policies.Operator)]
         public async Task<OkApiResult<Guid>> CreateOut([FromBody] CreateOutStockDocumentDto createOutStockDocumentDto)
         {
             return OkApiResult<Guid>.Ok(await _stockDocumentService.CreateOutStockDocumentAsync(createOutStockDocumentDto));
@@ -34,6 +34,7 @@ namespace WarehouseManagement.WebApi.Controllers
         /// </summary>
         [HttpPost]
         [DisplayName(" ایجاد سند انتقال کالا")]
+        [Authorize(Policy = Policies.Operator)]
         public async Task<OkApiResult<Guid>> CreateTransfer([FromBody] CreateTransferStockDocumentDto createTransferStockDocumentDto)
         {
             return OkApiResult<Guid>.Ok(await _stockDocumentService.CreateTransferStockDocumentAsync(createTransferStockDocumentDto));
@@ -44,6 +45,7 @@ namespace WarehouseManagement.WebApi.Controllers
         /// </summary>
         [HttpPost]
         [DisplayName(" ثبت نهایی سند ")]
+        [Authorize(Policy = Policies.Operator)]
         public async Task<OkApiResult<bool>> Confirm([FromBody] StockDocumentIdDto stockDocumentIdDto)
         {
             return OkApiResult<bool>.Ok(await _stockDocumentService.PostAsync(stockDocumentIdDto));

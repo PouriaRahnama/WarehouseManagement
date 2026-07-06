@@ -10,21 +10,21 @@
         /// </summary>
         [HttpGet]
         [DisplayName("واکشی تمام انبارها")]
-        [AllowAnonymous]
+        [Authorize(Policy = Policies.Viewer)]
         public async Task<OkApiResult<SearchQueryResponse<GetAllWarehousesDto>>> GetAll([FromQuery] FilterWarehousesDto QueryParams)
         {
             return OkApiResult<SearchQueryResponse<GetAllWarehousesDto>>.Ok(await _warehoseService.GetAllAsync(QueryParams));
         }
 
         /// <summary>
-        ///(کلی) واکشی تمام انبارها
+        /// واکشی نام تمام انبارها
         /// </summary>
         [HttpGet]
-        [DisplayName("واکشی تمام انبارها (کلی )")]
-        [AllowAnonymous]
-        public async Task<OkApiResult<SearchQueryResponse<GetWarehousesDto>>> GetWarehouses([FromQuery] FilterWarehousesDto QueryParams)
+        [DisplayName("واکشی نام تمام انبارها ")]
+        [Authorize(Policy = Policies.Viewer)]
+        public async Task<OkApiResult<SearchQueryResponse<GetWarehouseNamesDto>>> GetWarehouseNames([FromQuery] FilterWarehousesDto QueryParams)
         {
-            return OkApiResult<SearchQueryResponse<GetWarehousesDto>>.Ok(await _warehoseService.GetWarehousesAsync(QueryParams));
+            return OkApiResult<SearchQueryResponse<GetWarehouseNamesDto>>.Ok(await _warehoseService.GetWarehouseNamesAsync(QueryParams));
         }
 
 
@@ -33,7 +33,7 @@
         /// </summary>
         [HttpGet]
         [DisplayName("واکشی انبار توسط شناسه")]
-        [AllowAnonymous]
+        [Authorize(Policy = Policies.Viewer)]
         public async Task<OkApiResult<GetWarehouseDetailsDto>> GetById([FromQuery] Guid id)
         {
             return OkApiResult<GetWarehouseDetailsDto>.Ok(await _warehoseService.GetByIdAsync(id));
@@ -44,6 +44,7 @@
         /// </summary>
         [HttpPost]
         [DisplayName("ایجاد انبار")]
+        [Authorize(Policy = Policies.Admin)]
         public async Task<OkApiResult<Guid>> Create([FromBody] CreateWarehouseDto createWarehouseDto)
         {
             return OkApiResult<Guid>.Ok(await _warehoseService.CreateAsync(createWarehouseDto));
@@ -54,6 +55,7 @@
         /// </summary>
         [HttpPost]
         [DisplayName("ویرایش انبار")]
+        [Authorize(Policy = Policies.Admin)]
         public async Task<OkApiResult<bool>> Update([FromBody] UpdateWarehouseDto updateWarehouseDto)
         {
             return OkApiResult<bool>.Ok(await _warehoseService.UpdateAsync(updateWarehouseDto));
@@ -64,6 +66,7 @@
         /// </summary>
         [HttpPost]
         [DisplayName("حذف انبار")]
+        [Authorize(Policy = Policies.Admin)]
         public async Task<OkApiResult<bool>> Delete([FromQuery] Guid id)
         {
             return OkApiResult<bool>.Ok(await _warehoseService.DeleteAsync(id));

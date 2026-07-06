@@ -65,12 +65,12 @@
 
         }
 
-        public async Task<SearchQueryResponse<GetWarehousesDto>> GetWarehousesAsync(FilterWarehousesDto QueryParams)
+        public async Task<SearchQueryResponse<GetWarehouseNamesDto>> GetWarehouseNamesAsync(FilterWarehousesDto QueryParams)
         {
             var mapper = new GetWarehousesGridifyMapper();
 
             var query = _warehouseRepository.EntitiesAsNoTracking
-                    .ProjectTo<GetWarehousesDto>(_mapper.ConfigurationProvider)
+                    .ProjectTo<GetWarehouseNamesDto>(_mapper.ConfigurationProvider)
                     .AsQueryable();
 
             QueryParams.Page = 1;
@@ -78,8 +78,8 @@
             QueryParams.PageSize = totalCount;
             var qp = await query.GridifyQueryableAsync(QueryParams, mapper);
 
-            var pq = new Paging<GetWarehousesDto>(qp.Count, qp.Query);
-            return new SearchQueryResponse<GetWarehousesDto>(QueryParams, pq);
+            var pq = new Paging<GetWarehouseNamesDto>(qp.Count, qp.Query);
+            return new SearchQueryResponse<GetWarehouseNamesDto>(QueryParams, pq);
         }
 
         public async Task<bool> UpdateAsync(UpdateWarehouseDto updateWarehouseDto)

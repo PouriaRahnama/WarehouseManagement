@@ -9,7 +9,7 @@
             AddMap("Code", p => p.Code);
         }
     }
-    public class GetProductsGridifyMapper : GridifyMapper<GetProductsDto>
+    public class GetProductsGridifyMapper : GridifyMapper<GetProductNamesDto>
     {
         public GetProductsGridifyMapper()
         {

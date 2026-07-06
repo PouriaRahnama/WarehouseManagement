@@ -37,7 +37,7 @@
                 options.SaveToken = true;
                 options.TokenValidationParameters = new TokenValidationParameters
                 {
-                    ClockSkew = TimeSpan.FromMinutes(1),
+                    ClockSkew = TimeSpan.FromMinutes(5),
                     ValidateIssuer = true,
                     ValidateAudience = true,
                     ValidateLifetime = true,
@@ -77,7 +77,22 @@
                 options.FallbackPolicy = new AuthorizationPolicyBuilder()
                 .RequireAuthenticatedUser()
                 .Build();
+
+                options.AddPolicy(Policies.Admin, policy =>
+                    policy.RequireRole(nameof(UserRole.Admin)));
+
+                options.AddPolicy(Policies.Operator, policy =>
+                    policy.RequireRole(nameof(UserRole.Operator),
+                              nameof(UserRole.Admin)));
+
+                options.AddPolicy(Policies.Viewer, policy =>
+                    policy.RequireRole(
+                            nameof(UserRole.Admin),
+                            nameof(UserRole.Operator),
+                            nameof(UserRole.Viewer)));
+
             });
+
 
             #endregion
         }

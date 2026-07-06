@@ -9,7 +9,7 @@
             AddMap("Location", p => p.Location);
         }
     }
-    public class GetWarehousesGridifyMapper : GridifyMapper<GetWarehousesDto>
+    public class GetWarehousesGridifyMapper : GridifyMapper<GetWarehouseNamesDto>
     {
         public GetWarehousesGridifyMapper()
         {

@@ -52,12 +52,12 @@
             return new SearchQueryResponse<GetAllProductsDto>(QueryParams, pq);
         }
 
-        public async Task<SearchQueryResponse<GetProductsDto>> GetProductsAsync(FilterProductsDto QueryParams)
+        public async Task<SearchQueryResponse<GetProductNamesDto>> GetProductNamesAsync(FilterProductsDto QueryParams)
         {
             var mapper = new GetProductsGridifyMapper();
 
             var query = _productRepository.EntitiesAsNoTracking
-                    .ProjectTo<GetProductsDto>(_mapper.ConfigurationProvider)
+                    .ProjectTo<GetProductNamesDto>(_mapper.ConfigurationProvider)
                     .AsQueryable();
 
             QueryParams.Page = 1;
@@ -65,8 +65,8 @@
             QueryParams.PageSize = totalCount;
             var qp = await query.GridifyQueryableAsync(QueryParams, mapper);
 
-            var pq = new Paging<GetProductsDto>(qp.Count, qp.Query);
-            return new SearchQueryResponse<GetProductsDto>(QueryParams, pq);
+            var pq = new Paging<GetProductNamesDto>(qp.Count, qp.Query);
+            return new SearchQueryResponse<GetProductNamesDto>(QueryParams, pq);
         }
 
         public async Task<GetProductDetailsDto> GetByIdAsync(Guid productId)

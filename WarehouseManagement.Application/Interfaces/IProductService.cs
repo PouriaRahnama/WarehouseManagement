@@ -3,7 +3,7 @@
     public interface IProductService
     {
         Task<SearchQueryResponse<GetAllProductsDto>> GetAllAsync(FilterProductsDto QueryParams);
-        Task<SearchQueryResponse<GetProductsDto>> GetProductsAsync(FilterProductsDto QueryParams);
+        Task<SearchQueryResponse<GetProductNamesDto>> GetProductNamesAsync(FilterProductsDto QueryParams);
         Task<GetProductDetailsDto> GetByIdAsync(Guid productId);
         Task<Guid> CreateAsync(CreateProductDto createProductDto);
         Task<bool> UpdateAsync(UpdateProductDto updateProductDto);

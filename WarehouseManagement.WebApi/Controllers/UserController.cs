@@ -55,6 +55,7 @@
         /// </summary>
         [HttpGet]
         [DisplayName("واکشی کاربران سیستم - واکشی کاربر توسط شناسه")]
+        [Authorize(Policy = Policies.Viewer)]
         public async Task<OkApiResult<SearchQueryResponse<GetAllUserAccountsDto>>> GetAll([FromQuery] FilterUsersDto QueryParams)
         {
             return OkApiResult<SearchQueryResponse<GetAllUserAccountsDto>>.Ok(await _userService.GetAllAsync(QueryParams));

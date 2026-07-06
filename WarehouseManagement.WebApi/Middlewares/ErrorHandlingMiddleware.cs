@@ -2,10 +2,14 @@ namespace WarehouseManagement.WebApi.Middlewares;
 public class ErrorHandlingMiddleware
 {
     private readonly RequestDelegate _next;
+    private readonly ILogger<ErrorHandlingMiddleware> _logger;
 
-    public ErrorHandlingMiddleware(RequestDelegate next)
+    public ErrorHandlingMiddleware(
+    RequestDelegate next,
+    ILogger<ErrorHandlingMiddleware> logger)
     {
         _next = next;
+        _logger = logger;
     }
 
     public async Task Invoke(HttpContext context)
@@ -16,6 +20,8 @@ public class ErrorHandlingMiddleware
         }
         catch (Exception ex)
         {
+          //  _logger.LogError(ex, "Unhandled exception occurred");
+
             int statusCode = ex switch
             {
                 NotFoundException => StatusCodes.Status404NotFound,

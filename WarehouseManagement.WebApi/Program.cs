@@ -1,3 +1,5 @@
+﻿using WarehouseManagement.Domain.Enums;
+
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();

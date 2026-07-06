@@ -24,7 +24,7 @@
                 .ForMember(dest => dest.CreatedDateTime,
                 opt => opt.MapFrom(src => EF.Property<DateTime?>(src, "CreatedDateTime")));
 
-            CreateMap<Product, GetProductsDto>()
+            CreateMap<Product, GetProductNamesDto>()
                 .ForMember(dest => dest.ProductId, opt => opt.MapFrom(src => src.Id))
                 .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Name));
 
