@@ -1,6 +1,4 @@
-﻿using WarehouseManagement.Framework.Common;
-
-namespace WarehouseManagement.Infrastructure.Interceptors;
+﻿namespace WarehouseManagement.Infrastructure.Interceptors;
 
 public class SaveChangesInterceptor : Microsoft.EntityFrameworkCore.Diagnostics.SaveChangesInterceptor
 {

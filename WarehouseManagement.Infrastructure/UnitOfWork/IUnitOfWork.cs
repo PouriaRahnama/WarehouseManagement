@@ -1,6 +1,4 @@
-﻿using System.Data;
-using Microsoft.EntityFrameworkCore.Storage;
-
+﻿
 namespace WarehouseManagement.Infrastructure.UnitOfWork
 {
     public interface IUnitOfWork : IDisposable

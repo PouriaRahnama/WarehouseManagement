@@ -1,8 +1,4 @@
-﻿using System.Data;
-using Microsoft.EntityFrameworkCore.Storage;
-using WarehouseManagement.Infrastructure.Persistence;
-
-namespace WarehouseManagement.Infrastructure.UnitOfWork
+﻿namespace WarehouseManagement.Infrastructure.UnitOfWork
 {
     public class UnitOfWork : IUnitOfWork
     {

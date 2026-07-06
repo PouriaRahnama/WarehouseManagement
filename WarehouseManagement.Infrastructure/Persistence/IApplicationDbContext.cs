@@ -1,7 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore.Infrastructure;
-using WarehouseManagement.Domain.Entities;
-
-namespace WarehouseManagement.Infrastructure.Persistence;
+﻿namespace WarehouseManagement.Infrastructure.Persistence;
 
 public interface IApplicationDbContext : IDisposable
 {

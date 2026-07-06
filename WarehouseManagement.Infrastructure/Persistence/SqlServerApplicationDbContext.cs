@@ -1,8 +1,4 @@
-﻿using WarehouseManagement.Domain.Entities;
-using WarehouseManagement.Infrastructure.Common;
-using WarehouseManagement.Infrastructure.MapConfig;
-
-namespace WarehouseManagement.Infrastructure.Persistence;
+﻿namespace WarehouseManagement.Infrastructure.Persistence;
 
 public class SqlServerApplicationDbContext : DbContext, IApplicationDbContext
 {

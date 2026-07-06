@@ -1,35 +1,34 @@
-﻿using WarehouseManagement.Domain.Entities;
+﻿
+namespace WarehouseManagement.Infrastructure.MapConfig;
 
-namespace WarehouseManagement.Infrastructure.MapConfig
+public class StockBalanceConfiguration : IEntityTypeConfiguration<StockBalance>
 {
-    public class StockBalanceConfiguration : IEntityTypeConfiguration<StockBalance>
+    public void Configure(EntityTypeBuilder<StockBalance> builder)
     {
-        public void Configure(EntityTypeBuilder<StockBalance> builder)
-        {
-            builder.HasKey(x => new { x.WarehouseId, x.ProductId });
-            builder.ToTable("StockBalances");
-            //builder.HasQueryFilter(x => !EF.Property<bool>(x, "IsDeleted"));
+        builder.HasKey(x => new { x.WarehouseId, x.ProductId });
+        builder.ToTable("StockBalances");
+        //builder.HasQueryFilter(x => !EF.Property<bool>(x, "IsDeleted"));
 
-            builder.Property(x => x.Quantity)
-                 .IsRequired();
+        builder.Property(x => x.Quantity)
+             .IsRequired();
 
-            builder.HasIndex(x => x.ProductId);
+        builder.HasIndex(x => x.ProductId);
 
-            builder.Property(x => x.RowVersion)
-                 .IsRowVersion()
-                 .IsConcurrencyToken();
+        builder.Property(x => x.RowVersion)
+             .IsRowVersion()
+             .IsConcurrencyToken();
 
-            // Relations
-            builder.HasOne(x => x.Product)
-                .WithMany(x => x.StockBalances)
-                .HasForeignKey(x => x.ProductId)
-                .OnDelete(DeleteBehavior.Restrict);
+        // Relations
+        builder.HasOne(x => x.Product)
+            .WithMany(x => x.StockBalances)
+            .HasForeignKey(x => x.ProductId)
+            .OnDelete(DeleteBehavior.Restrict);
 
-            builder.HasOne(x => x.Warehouse)
-                .WithMany(x => x.StockBalances)
-                .HasForeignKey(x => x.WarehouseId)
-                .OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.Warehouse)
+            .WithMany(x => x.StockBalances)
+            .HasForeignKey(x => x.WarehouseId)
+            .OnDelete(DeleteBehavior.Restrict);
 
-        }
     }
 }
+

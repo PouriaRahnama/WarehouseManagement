@@ -1,37 +1,34 @@
-﻿using WarehouseManagement.Domain.Entities;
+﻿namespace WarehouseManagement.Infrastructure.MapConfig;
 
-namespace WarehouseManagement.Infrastructure.MapConfig
+public class UserRefreshTokenConfiguration : IEntityTypeConfiguration<UserRefreshToken>
 {
-    public class UserRefreshTokenConfiguration : IEntityTypeConfiguration<UserRefreshToken>
+    public void Configure(EntityTypeBuilder<UserRefreshToken> builder)
     {
-        public void Configure(EntityTypeBuilder<UserRefreshToken> builder)
-        {
-            builder.HasKey(x => x.Id);
-            builder.ToTable("UserRefreshTokens");
-            //builder.HasQueryFilter(x => !EF.Property<bool>(x, "IsDeleted"));
+        builder.HasKey(x => x.Id);
+        builder.ToTable("UserRefreshTokens");
+        //builder.HasQueryFilter(x => !EF.Property<bool>(x, "IsDeleted"));
 
-            builder.Property(x => x.RefreshToken)
-                .IsRequired().HasMaxLength(500);
+        builder.Property(x => x.RefreshToken)
+            .IsRequired().HasMaxLength(500);
 
-            builder.Property(x => x.DeviceName)
-                .HasMaxLength(450);
+        builder.Property(x => x.DeviceName)
+            .HasMaxLength(450);
 
-            builder.Property(x => x.IsRevoked)
-                .IsRequired();
+        builder.Property(x => x.IsRevoked)
+            .IsRequired();
 
-            builder.Property(x => x.ExpireDate)
-                .IsRequired();
+        builder.Property(x => x.ExpireDate)
+            .IsRequired();
 
-            builder.HasIndex(x => x.UserId);
+        builder.HasIndex(x => x.UserId);
 
-            builder.HasIndex(x => x.RefreshToken)
-                .IsUnique();
+        builder.HasIndex(x => x.RefreshToken)
+            .IsUnique();
 
-            // Relations
-            builder.HasOne(e => e.User)
-                   .WithMany(e => e.UserRefreshTokens)
-                   .HasForeignKey(cr => cr.UserId)
-                   .OnDelete(DeleteBehavior.Restrict);
-        }
+        // Relations
+        builder.HasOne(e => e.User)
+               .WithMany(e => e.UserRefreshTokens)
+               .HasForeignKey(cr => cr.UserId)
+               .OnDelete(DeleteBehavior.Restrict);
     }
 }

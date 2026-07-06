@@ -1,6 +1,3 @@
-using WarehouseManagement.Infrastructure.Persistence;
-using WarehouseManagement.Infrastructure.Repository.InterfacesRepository;
-
 namespace WarehouseManagement.Infrastructure.Repository.EntitiesRepository
 {
     public class Repository<TEntity> : IRepository<TEntity> where TEntity : class

@@ -1,18 +1,15 @@
-using WarehouseManagement.Infrastructure.Persistence;
+namespace WarehouseManagement.Infrastructure.Common;
 
-namespace WarehouseManagement.Infrastructure.Common
+public static class DatabaseStartup
 {
-    public static class DatabaseStartup
+    public static void ConfigureService(this IServiceCollection services, IConfiguration configuration)
     {
-        public static void ConfigureService(this IServiceCollection services, IConfiguration configuration)
+        services.AddTransient<Interceptors.SaveChangesInterceptor>();
+        services.AddDbContextPool<IApplicationDbContext, SqlServerApplicationDbContext>((sp, options) =>
         {
-            services.AddTransient<Interceptors.SaveChangesInterceptor>();
-            services.AddDbContextPool<IApplicationDbContext, SqlServerApplicationDbContext>((sp, options) =>
-            {
-                var connectionString = configuration.GetConnectionString("DefultConnection")
-                    ?? throw new Exception("connection database invalid");
-                options.UseSqlServer(connectionString).AddInterceptors(sp.GetRequiredService<Interceptors.SaveChangesInterceptor>());
-            }, poolSize: 16);
-        }
+            var connectionString = configuration.GetConnectionString("DefultConnection")
+                ?? throw new Exception("connection database invalid");
+            options.UseSqlServer(connectionString).AddInterceptors(sp.GetRequiredService<Interceptors.SaveChangesInterceptor>());
+        }, poolSize: 16);
     }
 }

@@ -1,6 +1,3 @@
-using WarehouseManagement.Domain.Common;
-using WarehouseManagement.Framework.Common;
-
 namespace WarehouseManagement.Infrastructure.Common;
 
 public static class ShadowPropertyExtensions

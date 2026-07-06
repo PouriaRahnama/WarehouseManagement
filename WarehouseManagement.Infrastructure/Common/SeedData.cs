@@ -1,7 +1,4 @@
-﻿using WarehouseManagement.Domain.Entities;
-using WarehouseManagement.Domain.Enums;
-
-namespace WarehouseManagement.Infrastructure.Common;
+﻿namespace WarehouseManagement.Infrastructure.Common;
 
 public static class SeedData
 {
