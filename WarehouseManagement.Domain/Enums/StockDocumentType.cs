@@ -1,9 +1,14 @@
-﻿namespace WarehouseManagement.Domain.Enums
+﻿namespace WarehouseManagement.Domain.Enums;
+
+public enum StockDocumentType
 {
-    public enum StockDocumentType
-    {
-        In = 10,
-        Out = 20,
-        Transfer = 30
-    }
+    [Display(Name = "سند ورود کالا")]
+    In = 10,
+
+    [Display(Name = "سند خروج کالا")]
+    Out = 20,
+
+    [Display(Name = "سند انتقال بین انبارها")]
+    Transfer = 30
 }
+

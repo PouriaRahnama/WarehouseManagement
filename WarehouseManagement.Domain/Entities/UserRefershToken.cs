@@ -1,6 +1,4 @@
-﻿using WarehouseManagement.Domain.Common;
-
-namespace WarehouseManagement.Domain.Entities;
+﻿namespace WarehouseManagement.Domain.Entities;
 /// <summary>
 /// رفرش توکن کاربر سیستم
 /// </summary>

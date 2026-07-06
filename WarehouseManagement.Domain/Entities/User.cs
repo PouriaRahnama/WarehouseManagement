@@ -1,7 +1,4 @@
-﻿using WarehouseManagement.Domain.Common;
-using WarehouseManagement.Domain.Enums;
-
-namespace WarehouseManagement.Domain.Entities;
+﻿namespace WarehouseManagement.Domain.Entities;
 
 /// <summary>
 /// کاربر سیستم

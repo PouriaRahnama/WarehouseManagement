@@ -1,7 +1,4 @@
-﻿using WarehouseManagement.Domain.Common;
-using WarehouseManagement.Domain.Enums;
-
-namespace WarehouseManagement.Domain.Entities;
+﻿namespace WarehouseManagement.Domain.Entities;
 
 /// <summary>
 /// محصول
@@ -11,6 +8,7 @@ public class Product : BaseEntity
     public Product()
     {
         StockBalances = new List<StockBalance>();
+        StockDocumentItems = new List<StockDocumentItem>();
     }
 
     public string Name { get; set; } 
