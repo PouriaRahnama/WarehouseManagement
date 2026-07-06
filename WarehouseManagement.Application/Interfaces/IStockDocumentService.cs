@@ -7,7 +7,6 @@ namespace WarehouseManagement.Application.Interfaces
         Task<Guid> CreateInStockDocumentAsync(CreateInStockDocumentDto createInStockDocumentDto);
         Task<Guid> CreateOutStockDocumentAsync(CreateOutStockDocumentDto createOutStockDocumentDto);
         Task<Guid> CreateTransferStockDocumentAsync(CreateTransferStockDocumentDto createTransferStockDocumentDto);
-
-       Task<bool> PostAsync(Guid stockDocumentId);
+        Task<bool> PostAsync(StockDocumentIdDto stockDocumentIdDto);
     }
 }

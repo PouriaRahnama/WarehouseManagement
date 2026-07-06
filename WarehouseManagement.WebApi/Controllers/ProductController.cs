@@ -43,7 +43,7 @@
         /// </summary>
         [HttpPost]
         [DisplayName("ایجاد محصول")]
-        public async Task<OkApiResult<Guid>> Create([FromForm] CreateProductDto createProductDto)
+        public async Task<OkApiResult<Guid>> Create([FromBody] CreateProductDto createProductDto)
         {
             return OkApiResult<Guid>.Ok(await _productService.CreateAsync(createProductDto));
         }
@@ -53,7 +53,7 @@
         /// </summary>
         [HttpPost]
         [DisplayName("ویرایش محصول")]
-        public async Task<OkApiResult<bool>> Update([FromForm] UpdateProductDto updateProductDto)
+        public async Task<OkApiResult<bool>> Update([FromBody] UpdateProductDto updateProductDto)
         {
             return OkApiResult<bool>.Ok(await _productService.UpdateAsync(updateProductDto));
         }

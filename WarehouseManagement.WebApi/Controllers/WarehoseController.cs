@@ -44,7 +44,7 @@
         /// </summary>
         [HttpPost]
         [DisplayName("ایجاد انبار")]
-        public async Task<OkApiResult<Guid>> Create([FromForm] CreateWarehouseDto createWarehouseDto)
+        public async Task<OkApiResult<Guid>> Create([FromBody] CreateWarehouseDto createWarehouseDto)
         {
             return OkApiResult<Guid>.Ok(await _warehoseService.CreateAsync(createWarehouseDto));
         }
@@ -54,7 +54,7 @@
         /// </summary>
         [HttpPost]
         [DisplayName("ویرایش انبار")]
-        public async Task<OkApiResult<bool>> Update([FromForm] UpdateWarehouseDto updateWarehouseDto)
+        public async Task<OkApiResult<bool>> Update([FromBody] UpdateWarehouseDto updateWarehouseDto)
         {
             return OkApiResult<bool>.Ok(await _warehoseService.UpdateAsync(updateWarehouseDto));
         }

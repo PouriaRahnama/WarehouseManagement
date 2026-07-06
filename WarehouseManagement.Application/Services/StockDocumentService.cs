@@ -67,10 +67,10 @@ namespace WarehouseManagement.Application.Services
             return document.Id;
         }
 
-        public async Task<bool> PostAsync(Guid stockDocumentId)
+        public async Task<bool> PostAsync(StockDocumentIdDto stockDocumentIdDto)
         {
             var document = await _stockDocumentRepository.EntitiesAsNoTracking
-                .FirstOrDefaultAsync(x => x.Id == stockDocumentId);
+                .FirstOrDefaultAsync(x => x.Id == stockDocumentIdDto.StockDocumentId);
 
             if (document == null) throw new NotFoundException("سند یافت نشد.");
             if (document.Status != StockDocumentStatus.Wait) throw new BusinessException("سند قبلاً ثبت شده است.");
@@ -78,15 +78,15 @@ namespace WarehouseManagement.Application.Services
             switch (document.Type)
             {
                 case StockDocumentType.In:
-                    await IncreaseWarehouseStockWhenPostedAsync(stockDocumentId);
+                    await IncreaseWarehouseStockWhenPostedAsync(stockDocumentIdDto.StockDocumentId);
                     break;
 
                 case StockDocumentType.Out:
-                    await DecreaseWarehouseStockWhenPostedAsync(stockDocumentId);
+                    await DecreaseWarehouseStockWhenPostedAsync(stockDocumentIdDto.StockDocumentId);
                     break;
 
                 case StockDocumentType.Transfer:
-                    await TransferWarehouseStockWhenPostedAsync(stockDocumentId);
+                    await TransferWarehouseStockWhenPostedAsync(stockDocumentIdDto.StockDocumentId);
                     break;
 
                 default:

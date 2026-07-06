@@ -30,5 +30,10 @@ public class ApiBaseController : ControllerBase
     protected IWarehouseService _warehoseService => warehoseService
         ??= HttpContext.RequestServices.GetRequiredService<IWarehouseService>();
 
+
+    private IStockDocumentService stockDocumentService;
+    protected IStockDocumentService _stockDocumentService => stockDocumentService
+        ??= HttpContext.RequestServices.GetRequiredService<IStockDocumentService>();
+
 }
 
