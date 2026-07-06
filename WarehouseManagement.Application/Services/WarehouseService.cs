@@ -67,7 +67,7 @@
 
         public async Task<SearchQueryResponse<GetWarehouseNamesDto>> GetWarehouseNamesAsync(FilterWarehousesDto QueryParams)
         {
-            var mapper = new GetWarehousesGridifyMapper();
+            var mapper = new GetWarehouseNamesGridifyMapper();
 
             var query = _warehouseRepository.EntitiesAsNoTracking
                     .ProjectTo<GetWarehouseNamesDto>(_mapper.ConfigurationProvider)

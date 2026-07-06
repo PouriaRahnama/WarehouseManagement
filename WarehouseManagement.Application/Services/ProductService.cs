@@ -54,7 +54,7 @@
 
         public async Task<SearchQueryResponse<GetProductNamesDto>> GetProductNamesAsync(FilterProductsDto QueryParams)
         {
-            var mapper = new GetProductsGridifyMapper();
+            var mapper = new GetProductNamesGridifyMapper();
 
             var query = _productRepository.EntitiesAsNoTracking
                     .ProjectTo<GetProductNamesDto>(_mapper.ConfigurationProvider)

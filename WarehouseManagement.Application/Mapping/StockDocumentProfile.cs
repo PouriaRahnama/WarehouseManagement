@@ -1,6 +1,4 @@
-﻿using WarehouseManagement.Application.Dtos.StockDocumentDtos;
-
-namespace WarehouseManagement.Application.Mapping
+﻿namespace WarehouseManagement.Application.Mapping
 {
     public class StockDocumentProfile : Profile
     {

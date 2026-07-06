@@ -1,4 +1,4 @@
-﻿namespace WarehouseManagement.Application.Common
+﻿namespace WarehouseManagement.Framework.Common
 {
     public static class Policies
     {

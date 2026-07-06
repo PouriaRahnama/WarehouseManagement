@@ -9,9 +9,9 @@
             AddMap("Code", p => p.Code);
         }
     }
-    public class GetProductsGridifyMapper : GridifyMapper<GetProductNamesDto>
+    public class GetProductNamesGridifyMapper : GridifyMapper<GetProductNamesDto>
     {
-        public GetProductsGridifyMapper()
+        public GetProductNamesGridifyMapper()
         {
             AddMap("Name", p => p.Name);
             AddMap("ProductId", p => p.ProductId);

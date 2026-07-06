@@ -1,6 +1,4 @@
-﻿using WarehouseManagement.Application.Dtos.WarehouseDtos;
-
-namespace WarehouseManagement.Application.Interfaces
+﻿namespace WarehouseManagement.Application.Interfaces
 {
     public interface IWarehouseService
     {

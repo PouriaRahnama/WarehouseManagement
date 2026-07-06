@@ -1,6 +1,4 @@
-﻿using WarehouseManagement.Domain.Entities;
-
-namespace WarehouseManagement.Application.Common
+﻿namespace WarehouseManagement.Application.Common
 {
     public class JwtTokenUtility
     {

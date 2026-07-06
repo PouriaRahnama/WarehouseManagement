@@ -1,6 +1,4 @@
-﻿using WarehouseManagement.Application.Dtos.StockDocumentDtos;
-
-namespace WarehouseManagement.Application.Services
+﻿namespace WarehouseManagement.Application.Services
 {
     public class StockDocumentService : IStockDocumentService
     {
