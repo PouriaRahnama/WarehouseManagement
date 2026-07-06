@@ -1,11 +1,3 @@
-using System.Reflection;
-using Microsoft.OpenApi.Models;
-using WarehouseManagement.Application.Common;
-using WarehouseManagement.Framework.Common;
-using WarehouseManagement.Infrastructure.Common;
-using WarehouseManagement.WebApi.Configuration;
-using WarehouseManagement.WebApi.Middlewares;
-
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();

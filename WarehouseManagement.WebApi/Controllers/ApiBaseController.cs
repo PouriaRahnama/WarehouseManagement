@@ -1,4 +1,3 @@
-using WarehouseManagement.Application.Interfaces;
 namespace WarehouseManagement.WebApi.Controllers;
 
 [ApiController]

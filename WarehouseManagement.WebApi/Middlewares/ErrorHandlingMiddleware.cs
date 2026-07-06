@@ -1,5 +1,3 @@
-using WarehouseManagement.Framework.Common;
-
 namespace WarehouseManagement.WebApi.Middlewares;
 public class ErrorHandlingMiddleware
 {

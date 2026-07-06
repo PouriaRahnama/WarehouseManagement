@@ -1,6 +1,4 @@
-﻿using WarehouseManagement.Application.Dtos.WarehouseDtos;
-
-namespace WarehouseManagement.WebApi.Controllers
+﻿namespace WarehouseManagement.WebApi.Controllers
 {
     public class WarehoseController : ApiBaseController
     {
