@@ -18,6 +18,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		README.md = README.md
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WarehouseManagement.Test", "WarehouseManagement.Test\WarehouseManagement.Test.csproj", "{921379A4-029F-4BB0-BBF3-DF15C8A0D26C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -44,6 +46,10 @@ Global
 		{ED1838AA-2025-4EE4-AD1F-B7B1F52AF98C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{ED1838AA-2025-4EE4-AD1F-B7B1F52AF98C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{ED1838AA-2025-4EE4-AD1F-B7B1F52AF98C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{921379A4-029F-4BB0-BBF3-DF15C8A0D26C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{921379A4-029F-4BB0-BBF3-DF15C8A0D26C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{921379A4-029F-4BB0-BBF3-DF15C8A0D26C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{921379A4-029F-4BB0-BBF3-DF15C8A0D26C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
