@@ -30,6 +30,21 @@
                 .ForMember(dest => dest.CreatedDateTime,
                 opt => opt.MapFrom(src => EF.Property<DateTime?>(src, "CreatedDateTime")));
 
+
+            CreateMap<Warehouse, WarehouseStockReportsDto>()
+                .ForMember(dest => dest.WarehouseId, opt => opt.MapFrom(src => src.Id))
+                .ForMember(dest => dest.WarehouseName, opt => opt.MapFrom(src => src.Name))
+                .ForMember(dest => dest.Products, opt => opt.MapFrom(src => src.StockBalances))
+                .ForMember(dest => dest.CreatedDateTime,
+                    opt => opt.MapFrom(src => EF.Property<DateTime>(src, "CreatedDateTime").ToPersianDate()));
+
+            CreateMap<StockBalance, WarehouseProductDto>()
+                .ForMember(dest => dest.Quantity, opt => opt.MapFrom(src => src.Quantity))
+                .ForMember(dest => dest.ProductId, opt => opt.MapFrom(src => src.ProductId))
+                .ForMember(dest => dest.ProductName, opt => opt.MapFrom(src => src.Product.Name))
+                .ForMember(dest => dest.ProductCode, opt => opt.MapFrom(src => src.Product.Code))
+                .ForMember(dest => dest.MinimumStock, opt => opt.MapFrom(src => src.Product.MinimumStock));
+
             CreateMap<UpdateWarehouseDto, Warehouse>()
                 .ForMember(dest => dest.Id, opt => opt.Ignore())
                 .ForMember(dest => dest.Code, opt => opt.Ignore())

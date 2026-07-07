@@ -16,22 +16,27 @@
         public async Task<SearchQueryResponse<WarehouseStockReportsDto>> GetWarehouseStockReportsAsync(FilterWarehouseStockReportsDto queryParams)
         {
             var mapper = new WarehouseStockReportsGridifyMapper();
-
+            //one
             var query = _warehouseRepository.EntitiesAsNoTracking
-                .Select(w => new WarehouseStockReportsDto
-                {
-                    WarehouseId = w.Id,
-                    WarehouseName = w.Name,
-                    CreatedDateTime = EF.Property<DateTime>(w, "CreatedDateTime"),
-                    Products = w.StockBalances.Select(sb => new WarehouseProductDto
-                    {
-                        ProductId = sb.ProductId,
-                        ProductName = sb.Product.Name,
-                        ProductCode = sb.Product.Code,
-                        Quantity = sb.Quantity,
-                        MinimumStock = sb.Product.MinimumStock
-                    })
-                });
+                .ProjectTo<WarehouseStockReportsDto>(_mapper.ConfigurationProvider)
+                .OrderByDescending(x => EF.Property<DateTime>(x, "CreatedDateTime"))
+                .AsQueryable();
+            //two
+            //var query = _warehouseRepository.EntitiesAsNoTracking
+            //    .Select(w => new WarehouseStockReportsDto
+            //    {
+            //        WarehouseId = w.Id,
+            //        WarehouseName = w.Name,
+            //        CreatedDateTime = EF.Property<DateTime>(w, "CreatedDateTime"),
+            //        Products = w.StockBalances.Select(sb => new WarehouseProductDto
+            //        {
+            //            ProductId = sb.ProductId,
+            //            ProductName = sb.Product.Name,
+            //            ProductCode = sb.Product.Code,
+            //            Quantity = sb.Quantity,
+            //            MinimumStock = sb.Product.MinimumStock
+            //        })
+            //    });
 
             var gridifyResult = await query.GridifyQueryableAsync(queryParams, mapper);
             var paging = new Paging<WarehouseStockReportsDto>(gridifyResult.Count, gridifyResult.Query);

@@ -21,9 +21,67 @@
             _stockDocumentRepository = stockDocumentRepository;
             _stockDocumentItemRepository = stockDocumentItemRepository;
         }
-     
 
 
+
+        public async Task<SearchQueryResponse<ProductLedgerItemReportDto>> GetProductLedgerReportAsync(FilterProductLedgerDto queryParams)
+        {
+            var query = _stockDocumentItemRepository.EntitiesAsNoTracking
+                .Include(x => x.StockDocument)
+                .Where(x => x.ProductId == queryParams.ProductId)
+                .Where(x => x.StockDocument.FromWarehouseId == queryParams.WarehouseId ||
+                x.StockDocument.ToWarehouseId == queryParams.WarehouseId).AsQueryable();
+
+            if (queryParams.FromDate.HasValue)
+                query = query.Where(x => EF.Property<DateTime>(x, "CreatedDateTime") >= queryParams.FromDate.Value);
+
+            if (queryParams.ToDate.HasValue)
+                query = query.Where(x => EF.Property<DateTime>(x, "CreatedDateTime") <= queryParams.ToDate.Value);
+
+            var items = await query.OrderBy(x => EF.Property<DateTime>(x, "CreatedDateTime")).ToListAsync();
+
+            var result = new List<ProductLedgerItemReportDto>();
+            var balance = 0;
+
+            foreach (var item in items)
+            {
+                var dto = _mapper.Map<ProductLedgerItemReportDto>(item);
+
+                if (item.StockDocument.Type == StockDocumentType.In)
+                {
+                    dto.IncomingQuantity = item.Quantity;
+                    balance += item.Quantity;
+                }
+                if (item.StockDocument.Type == StockDocumentType.Out)
+                {
+                    dto.OutgoingQuantity = item.Quantity;
+                    balance -= item.Quantity;
+                }
+                if (item.StockDocument.Type == StockDocumentType.Transfer)
+                {
+                    if (item.StockDocument.ToWarehouseId == queryParams.WarehouseId)
+                    {
+                        dto.IncomingQuantity = item.Quantity;
+                        balance += item.Quantity;
+                    }
+
+                    if (item.StockDocument.FromWarehouseId == queryParams.WarehouseId)
+                    {
+                        dto.OutgoingQuantity = item.Quantity;
+                        balance -= item.Quantity;
+                    }
+                }
+
+                dto.RunningBalance = balance;
+                result.Add(dto);
+            }
+
+            var paging = result.AsQueryable().GridifyQueryable(queryParams,
+                    new GridifyMapper<ProductLedgerItemReportDto>());
+
+            var pq = new Paging<ProductLedgerItemReportDto>(paging.Count,paging.Query);
+            return new SearchQueryResponse<ProductLedgerItemReportDto>(queryParams, pq);
+        }
 
         public async Task<Guid> CreateInStockDocumentAsync(CreateInStockDocumentDto createInStockDocumentDto)
         {
@@ -31,7 +89,7 @@
             await _stockDocumentRepository.CreateAsync(document);
 
             var items = _mapper.Map<List<StockDocumentItem>>(createInStockDocumentDto.Items, opt =>
-            { opt.Items["StockDocumentId"] = document.Id;});
+            { opt.Items["StockDocumentId"] = document.Id; });
             await _stockDocumentItemRepository.CreateRangeAsync(items);
 
             await _unitOfWork.SaveChangesAsync();
@@ -143,7 +201,7 @@
                 if (document.Status != StockDocumentStatus.Wait) throw new BusinessException("سند قبلاً پردازش شده است.");
                 if (!document.ToWarehouseId.HasValue) throw new BusinessException("انبار مقصد مشخص نشده است.");
 
-                await _stockBalanceService.IncreaseStockBalanceAsync(document.StockDocumentItems,document.ToWarehouseId.Value);
+                await _stockBalanceService.IncreaseStockBalanceAsync(document.StockDocumentItems, document.ToWarehouseId.Value);
 
                 document.Status = StockDocumentStatus.Posted;
 

@@ -43,7 +43,6 @@
                 .ForMember(dest => dest.UnitOfMeasure, opt => opt.MapFrom(src => src.UnitOfMeasure))
                 .ForMember(dest => dest.IsActive, opt => opt.MapFrom(src => src.IsActive))
                 .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Name));
-
         }
     }
 }
