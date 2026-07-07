@@ -38,9 +38,24 @@
                 .AfterMap((src, dest) =>
                     {
                         dest.Number = "DOC".GenerateDocumentNumber();
-                    }); ;
+                    });
 
 
+            CreateMap<StockDocument, GetAllStockDocumentsDto>()
+                .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id))
+                .ForMember(dest => dest.ToWarehouseId, opt => opt.MapFrom(src => src.ToWarehouseId))
+                .ForMember(dest => dest.FromWarehouseId, opt => opt.MapFrom(src =>src.FromWarehouseId))
+                .ForMember(dest => dest.Number, opt => opt.MapFrom(src => src.Number))
+                .ForMember(dest => dest. Status, opt => opt.MapFrom(src => src.Status.GetDisplayName()))
+                .ForMember(dest => dest.Type, opt => opt.MapFrom(src => src.Type.GetDisplayName()))
+                .ForMember(dest => dest.StockDocumentItemsDto, opt => opt.MapFrom(src => src.StockDocumentItems))
+                .ForMember(dest => dest.CreatedDateTime,
+                    opt => opt.MapFrom(src => EF.Property<DateTime?>(src, "CreatedDateTime")));
+
+
+            CreateMap<StockDocumentItem, GetStockDocumentItemDto>()
+                .ForMember(dest => dest.ProductId, opt => opt.MapFrom(src => src.ProductId))
+                .ForMember(dest => dest.Quantity, opt => opt.MapFrom(src => src.Quantity));
 
         }
     }

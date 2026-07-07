@@ -23,6 +23,20 @@
         }
 
 
+        public async Task<SearchQueryResponse<GetAllStockDocumentsDto>> GetAllAsync(FilterStockDocumentsDto QueryParams)
+        {
+            var mapper = new StockDocumentsGridifyMapper();
+
+            var query = _stockDocumentRepository.EntitiesAsNoTracking
+                    .ProjectTo<GetAllStockDocumentsDto>(_mapper.ConfigurationProvider)
+                    .OrderByDescending(x => EF.Property<DateTime>(x, "CreatedDateTime"))
+                    .AsQueryable();
+
+            var qp = await query.GridifyQueryableAsync(QueryParams, mapper);
+
+            var pq = new Paging<GetAllStockDocumentsDto>(qp.Count, qp.Query);
+            return new SearchQueryResponse<GetAllStockDocumentsDto>(QueryParams, pq);
+        }
 
         public async Task<SearchQueryResponse<ProductLedgerItemReportDto>> GetProductLedgerReportAsync(FilterProductLedgerDto queryParams)
         {

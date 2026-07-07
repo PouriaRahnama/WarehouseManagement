@@ -28,6 +28,8 @@ global using WarehouseManagement.Application.Dtos.UserRefreshTokenDto;
 global using WarehouseManagement.Application.Dtos.WarehouseDtos;
 global using WarehouseManagement.Application.Services;
 global using WarehouseManagement.Application.Dtos.StockDocumentDtos;
+global using Microsoft.AspNetCore.Authentication.JwtBearer;
+global using Microsoft.AspNetCore.Authorization;
+global using Microsoft.IdentityModel.Tokens;
 
- 
 

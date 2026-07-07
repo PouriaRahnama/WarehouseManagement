@@ -3,15 +3,20 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WarehouseManagement.WebApi", "WarehouseManagement.WebApi\WarehouseManagement.WebApi.csproj", "{8290A747-D07E-4F40-BAFD-A50B0E3341F7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WarehouseManagement.WebApi", "WarehouseManagement.WebApi\WarehouseManagement.WebApi.csproj", "{8290A747-D07E-4F40-BAFD-A50B0E3341F7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WarehouseManagement.Domain", "WarehouseManagement.Domain\WarehouseManagement.Domain.csproj", "{2D1D003C-C39E-4785-9601-2CFFFA1ED359}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WarehouseManagement.Domain", "WarehouseManagement.Domain\WarehouseManagement.Domain.csproj", "{2D1D003C-C39E-4785-9601-2CFFFA1ED359}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WarehouseManagement.Application", "WarehouseManagement.Application\WarehouseManagement.Application.csproj", "{435E57B1-85BE-4823-B8B0-48F1AC610D85}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WarehouseManagement.Application", "WarehouseManagement.Application\WarehouseManagement.Application.csproj", "{435E57B1-85BE-4823-B8B0-48F1AC610D85}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WarehouseManagement.Infrastructure", "WarehouseManagement.Infrastructure\WarehouseManagement.Infrastructure.csproj", "{6A8AC7D5-7272-4155-8784-5B5BA30B7D61}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WarehouseManagement.Infrastructure", "WarehouseManagement.Infrastructure\WarehouseManagement.Infrastructure.csproj", "{6A8AC7D5-7272-4155-8784-5B5BA30B7D61}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WarehouseManagement.Framework", "WarehouseManagement.Framework\WarehouseManagement.Framework.csproj", "{ED1838AA-2025-4EE4-AD1F-B7B1F52AF98C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WarehouseManagement.Framework", "WarehouseManagement.Framework\WarehouseManagement.Framework.csproj", "{ED1838AA-2025-4EE4-AD1F-B7B1F52AF98C}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{C9A97F79-2DB2-4C6E-BD29-A2631EA68A64}"
+	ProjectSection(SolutionItems) = preProject
+		README.md = README.md
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
