@@ -4,10 +4,11 @@
     {
         public StockDocumentProfile()
         {
+            CreateMap<CreateStockDocumentItemDto, StockDocumentItem>()
+                    .ForMember(dest => dest.StockDocumentId,
+                        opt => opt.MapFrom((src, dest, _, context) =>
+                            (Guid)context.Items["StockDocumentId"]));
 
-            CreateMap<(CreateStockDocumentItemDto, Guid id), StockDocumentItem>()
-                .ForMember(dest => dest.StockDocumentId, opt => opt.MapFrom((src, dest, _, context) =>
-                         (Guid)context.Items["StockDocumentId"]));
 
             CreateMap<CreateInStockDocumentDto, StockDocument>()
                     .ForMember(x => x.Type, opt => opt.MapFrom(_ => StockDocumentType.In))
@@ -39,14 +40,6 @@
                         dest.Number = "DOC".GenerateDocumentNumber();
                     }); ;
 
-            CreateMap<StockDocumentItem, ProductLedgerItemReportDto>()
-                .ForMember(x => x.DocumentNumber, opt => opt.MapFrom(src => src.StockDocument.Number))
-                .ForMember(x => x.DocumentType, opt => opt.MapFrom(src => src.StockDocument.Type))
-                .ForMember(x => x.OutgoingQuantity, opt => opt.Ignore())
-                .ForMember(x => x.RunningBalance, opt => opt.Ignore())
-                .ForMember(x => x.IncomingQuantity, opt => opt.Ignore())
-                .ForMember(dest => dest.DateTime,
-                     opt => opt.MapFrom(src => EF.Property<DateTime?>(src, "CreatedDateTime")));
 
 
         }

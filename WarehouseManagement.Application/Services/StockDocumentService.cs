@@ -38,37 +38,45 @@
             if (queryParams.ToDate.HasValue)
                 query = query.Where(x => EF.Property<DateTime>(x, "CreatedDateTime") <= queryParams.ToDate.Value);
 
-            var items = await query.OrderBy(x => EF.Property<DateTime>(x, "CreatedDateTime")).ToListAsync();
+            var items = await query.OrderBy(x => EF.Property<DateTime>(x, "CreatedDateTime")).Select(x => new
+            {
+                Item = x,
+                CreatedDateTime = EF.Property<DateTime>(x, "CreatedDateTime")
+            }).ToListAsync();
 
             var result = new List<ProductLedgerItemReportDto>();
             var balance = 0;
 
             foreach (var item in items)
             {
-                var dto = _mapper.Map<ProductLedgerItemReportDto>(item);
+                var dto = new  ProductLedgerItemReportDto(){
+                    DocumentNumber = item.Item.StockDocument.Number,
+                    DocumentType = item.Item.StockDocument.Type,
+                    DateTime = item.CreatedDateTime
+                };
 
-                if (item.StockDocument.Type == StockDocumentType.In)
+                if (item.Item.StockDocument.Type == StockDocumentType.In)
                 {
-                    dto.IncomingQuantity = item.Quantity;
-                    balance += item.Quantity;
+                    dto.IncomingQuantity = item.Item.Quantity;
+                    balance += item.Item.Quantity;
                 }
-                if (item.StockDocument.Type == StockDocumentType.Out)
+                if (item.Item.StockDocument.Type == StockDocumentType.Out)
                 {
-                    dto.OutgoingQuantity = item.Quantity;
-                    balance -= item.Quantity;
+                    dto.OutgoingQuantity = item.Item.Quantity;
+                    balance -= item.Item.Quantity;
                 }
-                if (item.StockDocument.Type == StockDocumentType.Transfer)
+                if (item.Item.StockDocument.Type == StockDocumentType.Transfer)
                 {
-                    if (item.StockDocument.ToWarehouseId == queryParams.WarehouseId)
+                    if (item.Item.StockDocument.ToWarehouseId == queryParams.WarehouseId)
                     {
-                        dto.IncomingQuantity = item.Quantity;
-                        balance += item.Quantity;
+                        dto.IncomingQuantity = item.Item.Quantity;
+                        balance += item.Item.Quantity;
                     }
 
-                    if (item.StockDocument.FromWarehouseId == queryParams.WarehouseId)
+                    if (item.Item.StockDocument.FromWarehouseId == queryParams.WarehouseId)
                     {
-                        dto.OutgoingQuantity = item.Quantity;
-                        balance -= item.Quantity;
+                        dto.OutgoingQuantity = item.Item.Quantity;
+                        balance -= item.Item.Quantity;
                     }
                 }
 
@@ -88,8 +96,9 @@
             var document = _mapper.Map<StockDocument>(createInStockDocumentDto);
             await _stockDocumentRepository.CreateAsync(document);
 
-            var items = _mapper.Map<List<StockDocumentItem>>(createInStockDocumentDto.Items, opt =>
-            { opt.Items["StockDocumentId"] = document.Id; });
+            var items = _mapper.Map<List<StockDocumentItem>>(
+            createInStockDocumentDto.Items,opt => opt.Items["StockDocumentId"] = document.Id);
+
             await _stockDocumentItemRepository.CreateRangeAsync(items);
 
             await _unitOfWork.SaveChangesAsync();
@@ -101,10 +110,9 @@
             var document = _mapper.Map<StockDocument>(createOutStockDocumentDto);
             await _stockDocumentRepository.CreateAsync(document);
 
-            var items = _mapper.Map<List<StockDocumentItem>>(createOutStockDocumentDto.Items, opt =>
-            {
-                opt.Items["StockDocumentId"] = document.Id;
-            });
+            var items = _mapper.Map<List<StockDocumentItem>>(
+            createOutStockDocumentDto.Items, opt => opt.Items["StockDocumentId"] = document.Id);
+
             await _stockDocumentItemRepository.CreateRangeAsync(items);
             await _unitOfWork.SaveChangesAsync();
             return document.Id;
@@ -115,10 +123,8 @@
             var document = _mapper.Map<StockDocument>(createTransferStockDocumentDto);
             await _stockDocumentRepository.CreateAsync(document);
 
-            var items = _mapper.Map<List<StockDocumentItem>>(createTransferStockDocumentDto.Items, opt =>
-            {
-                opt.Items["StockDocumentId"] = document.Id;
-            });
+            var items = _mapper.Map<List<StockDocumentItem>>(
+             createTransferStockDocumentDto.Items, opt => opt.Items["StockDocumentId"] = document.Id);
 
             await _stockDocumentItemRepository.CreateRangeAsync(items);
             await _unitOfWork.SaveChangesAsync();

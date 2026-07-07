@@ -36,7 +36,7 @@
                 .ForMember(dest => dest.WarehouseName, opt => opt.MapFrom(src => src.Name))
                 .ForMember(dest => dest.Products, opt => opt.MapFrom(src => src.StockBalances))
                 .ForMember(dest => dest.CreatedDateTime,
-                    opt => opt.MapFrom(src => EF.Property<DateTime>(src, "CreatedDateTime").ToPersianDate()));
+                    opt => opt.MapFrom(src => EF.Property<DateTime?>(src, "CreatedDateTime")));
 
             CreateMap<StockBalance, WarehouseProductDto>()
                 .ForMember(dest => dest.Quantity, opt => opt.MapFrom(src => src.Quantity))

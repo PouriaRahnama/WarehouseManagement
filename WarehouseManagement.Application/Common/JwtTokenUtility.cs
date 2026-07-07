@@ -1,4 +1,8 @@
-﻿namespace WarehouseManagement.Application.Common
+﻿
+using System.IdentityModel.Tokens.Jwt;
+using Microsoft.IdentityModel.Tokens;
+
+namespace WarehouseManagement.Application.Common
 {
     public class JwtTokenUtility
     {
