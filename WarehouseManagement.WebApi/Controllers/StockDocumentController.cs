@@ -8,6 +8,19 @@
         }
 
         /// <summary>
+        ///  کاردکس یک کالا در بازه زمانی 
+        /// </summary>
+        [HttpGet]
+        [DisplayName(" کاردکس یک کالا در بازه زمانی  ")]
+        [Authorize(Policy = Policies.Viewer)]
+        public async Task<OkApiResult<SearchQueryResponse<ProductLedgerItemReportDto>>> GetProductLedgerReport(
+            [FromQuery] FilterProductLedgerDto filterProductLedgerDto)
+        {
+            return OkApiResult<SearchQueryResponse<ProductLedgerItemReportDto>>
+                .Ok(await _stockDocumentService.GetProductLedgerReportAsync(filterProductLedgerDto));
+        }
+
+        /// <summary>
         /// ایجاد سند ورود کالا
         /// </summary>
         [HttpPost]
@@ -50,8 +63,6 @@
         {
             return OkApiResult<bool>.Ok(await _stockDocumentService.PostAsync(stockDocumentIdDto));
         }
-
-
 
     }
 }
