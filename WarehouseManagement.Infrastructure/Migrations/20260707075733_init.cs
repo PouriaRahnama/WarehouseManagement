@@ -22,7 +22,17 @@ namespace WarehouseManagement.Infrastructure.Migrations
                     Code = table.Column<string>(type: "nvarchar(75)", maxLength: 75, nullable: false),
                     MinimumStock = table.Column<int>(type: "int", nullable: false),
                     UnitOfMeasure = table.Column<int>(type: "int", nullable: false),
-                    IsActive = table.Column<bool>(type: "bit", nullable: false)
+                    IsActive = table.Column<bool>(type: "bit", nullable: false),
+                    CreatedByIP = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    CreatedByUserId = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    CreatedDateTime = table.Column<DateTime>(type: "datetime2", nullable: true, defaultValueSql: "GETDATE()"),
+                    DeletedByIP = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    DeletedByUserId = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    DeletedDateTime = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false, defaultValue: false),
+                    ModifiedByIP = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ModifiedByUserId = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ModifiedDateTime = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -39,7 +49,17 @@ namespace WarehouseManagement.Infrastructure.Migrations
                     Phone = table.Column<string>(type: "nvarchar(11)", maxLength: 11, nullable: false),
                     PasswordHash = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     PasswordSalt = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Role = table.Column<int>(type: "int", nullable: false)
+                    Role = table.Column<int>(type: "int", nullable: false),
+                    CreatedByIP = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    CreatedByUserId = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    CreatedDateTime = table.Column<DateTime>(type: "datetime2", nullable: true, defaultValueSql: "GETDATE()"),
+                    DeletedByIP = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    DeletedByUserId = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    DeletedDateTime = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false, defaultValue: false),
+                    ModifiedByIP = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ModifiedByUserId = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ModifiedDateTime = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -54,7 +74,17 @@ namespace WarehouseManagement.Infrastructure.Migrations
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Code = table.Column<string>(type: "nvarchar(75)", maxLength: 75, nullable: false),
                     Name = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false),
-                    Location = table.Column<string>(type: "nvarchar(300)", maxLength: 300, nullable: false)
+                    Location = table.Column<string>(type: "nvarchar(300)", maxLength: 300, nullable: false),
+                    CreatedByIP = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    CreatedByUserId = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    CreatedDateTime = table.Column<DateTime>(type: "datetime2", nullable: true, defaultValueSql: "GETDATE()"),
+                    DeletedByIP = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    DeletedByUserId = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    DeletedDateTime = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false, defaultValue: false),
+                    ModifiedByIP = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ModifiedByUserId = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ModifiedDateTime = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -72,7 +102,17 @@ namespace WarehouseManagement.Infrastructure.Migrations
                     ExpireDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     IsRevoked = table.Column<bool>(type: "bit", nullable: false),
                     RevokedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    DeviceName = table.Column<string>(type: "nvarchar(450)", maxLength: 450, nullable: true)
+                    DeviceName = table.Column<string>(type: "nvarchar(450)", maxLength: 450, nullable: true),
+                    CreatedByIP = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    CreatedByUserId = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    CreatedDateTime = table.Column<DateTime>(type: "datetime2", nullable: true, defaultValueSql: "GETDATE()"),
+                    DeletedByIP = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    DeletedByUserId = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    DeletedDateTime = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false, defaultValue: false),
+                    ModifiedByIP = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ModifiedByUserId = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ModifiedDateTime = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -94,7 +134,17 @@ namespace WarehouseManagement.Infrastructure.Migrations
                     WarehouseId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     ProductId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Quantity = table.Column<int>(type: "int", nullable: false),
-                    RowVersion = table.Column<byte[]>(type: "rowversion", rowVersion: true, nullable: false)
+                    RowVersion = table.Column<byte[]>(type: "rowversion", rowVersion: true, nullable: false),
+                    CreatedByIP = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    CreatedByUserId = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    CreatedDateTime = table.Column<DateTime>(type: "datetime2", nullable: true, defaultValueSql: "GETDATE()"),
+                    DeletedByIP = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    DeletedByUserId = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    DeletedDateTime = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false, defaultValue: false),
+                    ModifiedByIP = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ModifiedByUserId = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ModifiedDateTime = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -125,7 +175,17 @@ namespace WarehouseManagement.Infrastructure.Migrations
                     Type = table.Column<int>(type: "int", nullable: false),
                     Status = table.Column<int>(type: "int", nullable: false),
                     FromWarehouseId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    ToWarehouseId = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
+                    ToWarehouseId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    CreatedByIP = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    CreatedByUserId = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    CreatedDateTime = table.Column<DateTime>(type: "datetime2", nullable: true, defaultValueSql: "GETDATE()"),
+                    DeletedByIP = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    DeletedByUserId = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    DeletedDateTime = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false, defaultValue: false),
+                    ModifiedByIP = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ModifiedByUserId = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ModifiedDateTime = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -153,7 +213,17 @@ namespace WarehouseManagement.Infrastructure.Migrations
                 {
                     StockDocumentId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     ProductId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Quantity = table.Column<int>(type: "int", nullable: false)
+                    Quantity = table.Column<int>(type: "int", nullable: false),
+                    CreatedByIP = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    CreatedByUserId = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    CreatedDateTime = table.Column<DateTime>(type: "datetime2", nullable: true, defaultValueSql: "GETDATE()"),
+                    DeletedByIP = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    DeletedByUserId = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    DeletedDateTime = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false, defaultValue: false),
+                    ModifiedByIP = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ModifiedByUserId = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ModifiedDateTime = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -177,14 +247,14 @@ namespace WarehouseManagement.Infrastructure.Migrations
             migrationBuilder.InsertData(
                 schema: "WarehouseManagement",
                 table: "Users",
-                columns: new[] { "Id", "PasswordHash", "PasswordSalt", "Phone", "Role", "Username" },
-                values: new object[] { new Guid("6712adb7-a20d-43e9-8b29-357271f3bd65"), "3c830e2af2e5db02e2f467634499d3c807e7b0c1b09c247a478c893703999b0e", "6081de2f-df32-4e79-a844-772054b8fb32", "09121234567", 10, "AdminUser" });
+                columns: new[] { "Id", "CreatedByIP", "CreatedByUserId", "DeletedByIP", "DeletedByUserId", "DeletedDateTime", "ModifiedByIP", "ModifiedByUserId", "ModifiedDateTime", "PasswordHash", "PasswordSalt", "Phone", "Role", "Username" },
+                values: new object[] { new Guid("6712adb7-a20d-43e9-8b29-357271f3bd65"), null, null, null, null, null, null, null, null, "3c830e2af2e5db02e2f467634499d3c807e7b0c1b09c247a478c893703999b0e", "6081de2f-df32-4e79-a844-772054b8fb32", "09121234567", 10, "AdminUser" });
 
             migrationBuilder.InsertData(
                 schema: "WarehouseManagement",
                 table: "Users",
-                columns: new[] { "Id", "PasswordHash", "PasswordSalt", "Phone", "Role", "Username" },
-                values: new object[] { new Guid("92aa3814-ee96-4593-bdd3-cd613268137a"), "3c830e2af2e5db02e2f467634499d3c807e7b0c1b09c247a478c893703999b0e", "6081de2f-df32-4e79-a844-772054b8fb32", "09139876543", 20, "OperatorUser2" });
+                columns: new[] { "Id", "CreatedByIP", "CreatedByUserId", "DeletedByIP", "DeletedByUserId", "DeletedDateTime", "ModifiedByIP", "ModifiedByUserId", "ModifiedDateTime", "PasswordHash", "PasswordSalt", "Phone", "Role", "Username" },
+                values: new object[] { new Guid("92aa3814-ee96-4593-bdd3-cd613268137a"), null, null, null, null, null, null, null, null, "3c830e2af2e5db02e2f467634499d3c807e7b0c1b09c247a478c893703999b0e", "6081de2f-df32-4e79-a844-772054b8fb32", "09139876543", 20, "OperatorUser2" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_Products_Code",

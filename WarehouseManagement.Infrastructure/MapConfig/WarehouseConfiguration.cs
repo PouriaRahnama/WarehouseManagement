@@ -6,7 +6,7 @@ public class WarehouseConfiguration : IEntityTypeConfiguration<Warehouse>
     {
         builder.HasKey(x => x.Id);
         builder.ToTable("Warehouses");
-        builder.HasQueryFilter(x => !EF.Property<bool>(x, "IsDeleted"));
+       // builder.HasQueryFilter(x => !EF.Property<bool>(x, "IsDeleted"));
 
         builder.Property(x => x.Code)
             .IsRequired()

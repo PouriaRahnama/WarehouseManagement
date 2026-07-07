@@ -1,4 +1,5 @@
-﻿using WarehouseManagement.Domain.Enums;
+﻿using Microsoft.EntityFrameworkCore;
+using WarehouseManagement.Domain.Enums;
 using WarehouseManagement.Infrastructure.Persistence;
 
 var builder = WebApplication.CreateBuilder(args);

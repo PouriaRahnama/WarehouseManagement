@@ -180,8 +180,8 @@ public static class Extensions
 
     public static List<string> GetAllClassName(this Type type)
     {
-        var _lista = new List<Assembly>();
-        foreach (string dllPath in Directory.GetFiles(AppContext.BaseDirectory, "Invoice.*.dll"))
+        var _lista = new List<Assembly>(); 
+        foreach (string dllPath in Directory.GetFiles(AppContext.BaseDirectory, "WarehouseManagement.*.dll"))
         {
             var shadowCopiedAssembly = AssemblyLoadContext.Default.LoadFromAssemblyPath(dllPath);
             _lista.Add(shadowCopiedAssembly);
@@ -192,7 +192,7 @@ public static class Extensions
     public static List<Type> GetAllClassTypes(this Type type)
     {
         var _lista = new List<Assembly>();
-        foreach (string dllPath in Directory.GetFiles(AppContext.BaseDirectory, "Invoice.*.dll"))
+        foreach (string dllPath in Directory.GetFiles(AppContext.BaseDirectory, "WarehouseManagement.*.dll"))
         {
             var shadowCopiedAssembly = AssemblyLoadContext.Default.LoadFromAssemblyPath(dllPath);
             _lista.Add(shadowCopiedAssembly);

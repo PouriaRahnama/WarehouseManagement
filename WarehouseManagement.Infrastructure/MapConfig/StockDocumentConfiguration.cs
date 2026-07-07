@@ -6,7 +6,7 @@ public class StockDocumentConfiguration : IEntityTypeConfiguration<StockDocument
     {
         builder.HasKey(x => x.Id);
         builder.ToTable("StockDocuments");
-        builder.HasQueryFilter(x => !EF.Property<bool>(x, "IsDeleted"));
+       // builder.HasQueryFilter(x => !EF.Property<bool>(x, "IsDeleted"));
 
         builder.HasIndex(x => x.Number)
             .IsUnique();
