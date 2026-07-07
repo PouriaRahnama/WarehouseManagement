@@ -7,7 +7,7 @@ public static class DatabaseStartup
         services.AddTransient<Interceptors.SaveChangesInterceptor>();
         services.AddDbContextPool<IApplicationDbContext, SqlServerApplicationDbContext>((sp, options) =>
         {
-            var connectionString = configuration.GetConnectionString("DefultConnection")
+            var connectionString = configuration.GetConnectionString("defaultConnection")
                 ?? throw new Exception("connection database invalid");
             options.UseSqlServer(connectionString).AddInterceptors(sp.GetRequiredService<Interceptors.SaveChangesInterceptor>());
         }, poolSize: 16);

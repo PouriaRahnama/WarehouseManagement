@@ -1,4 +1,5 @@
 ﻿using WarehouseManagement.Domain.Enums;
+using WarehouseManagement.Infrastructure.Persistence;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -74,11 +75,11 @@ app.UseAuthentication();
 app.UseAuthorization();
 app.MapControllers();
 
-//using (var scope = app.Services.CreateScope())
-//{
-//    var db = scope.ServiceProvider.GetRequiredService<SqlServerApplicationDbContext>();
-//    db.Database.Migrate();
-//}
+using (var scope = app.Services.CreateScope())
+{
+    var db = scope.ServiceProvider.GetRequiredService<SqlServerApplicationDbContext>();
+    db.Database.Migrate();
+}
 
 app.UseSerilogRequestLogging();
 app.Run();
