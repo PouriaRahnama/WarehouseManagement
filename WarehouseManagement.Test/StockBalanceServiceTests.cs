@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using FluentAssertions;
@@ -12,7 +11,6 @@ using WarehouseManagement.Framework.Common;
 using WarehouseManagement.Infrastructure.Repository.InterfacesRepository;
 using WarehouseManagement.Infrastructure.UnitOfWork;
 using Xunit;
-
 
 namespace WarehouseManagement.Test
 {
@@ -45,7 +43,6 @@ namespace WarehouseManagement.Test
             var productId = Guid.NewGuid();
             var stock = new StockBalance { ProductId = productId, WarehouseId = warehouseId, Quantity = 10 };
 
-            // اصلاح اصلی اینجاست: BuildMock() مستقیماً IQueryable برمی‌گرداند
             var mockData = new List<StockBalance> { stock }.BuildMock();
             _mockRepo.Setup(r => r.Entities).Returns(mockData);
 
@@ -68,7 +65,6 @@ namespace WarehouseManagement.Test
             var productId = Guid.NewGuid();
             var stock = new StockBalance { ProductId = productId, WarehouseId = warehouseId, Quantity = 2 };
 
-            // اصلاح اصلی اینجاست
             var mockData = new List<StockBalance> { stock }.BuildMock();
             _mockRepo.Setup(r => r.Entities).Returns(mockData);
 
