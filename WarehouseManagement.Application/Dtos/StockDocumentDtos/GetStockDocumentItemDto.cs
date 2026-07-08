@@ -1,4 +1,4 @@
-﻿namespace WarehouseManagement.Application.Dtos.ProductDtos
+﻿namespace WarehouseManagement.Application.Dtos.StockDocumentDtos
 {
     public class GetStockDocumentItemDto
     {

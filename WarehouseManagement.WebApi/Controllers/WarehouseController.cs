@@ -1,8 +1,8 @@
 ﻿namespace WarehouseManagement.WebApi.Controllers
 {
-    public class WarehoseController : ApiBaseController
+    public class WarehouseController : ApiBaseController
     {
-        public WarehoseController(ILogger<ApiBaseController> logger) : base(logger) { }
+        public WarehouseController(ILogger<ApiBaseController> logger) : base(logger) { }
 
         /// <summary>
         /// واکشی موجودی کالا ها با فیلتر 

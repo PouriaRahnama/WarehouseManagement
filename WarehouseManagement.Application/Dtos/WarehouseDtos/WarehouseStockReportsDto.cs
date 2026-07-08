@@ -6,7 +6,7 @@
         public string WarehouseName { get; set; }
         public DateTime? CreatedDateTime { get; set; }
 
-        public IEnumerable<WarehouseProductDto> Products { get; set; } = Enumerable.Empty<WarehouseProductDto>();
+        public List<WarehouseProductDto> Products { get; set; } = new();
 
     }
     public class WarehouseProductDto

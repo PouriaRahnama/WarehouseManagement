@@ -4,9 +4,10 @@
     {
         public WarehouseGridifyMapper()
         {
-            AddMap("Name", p => p.Name);
-            AddMap("WarehoseId", p => p.WarehouseId);
-            AddMap("Location", p => p.Location);
+            AddMap("code", p => p.Code);
+            AddMap("name", p => p.Name);
+            AddMap("warehouseId", p => p.WarehouseId);
+            AddMap("location", p => p.Location);
         }
     }
 }

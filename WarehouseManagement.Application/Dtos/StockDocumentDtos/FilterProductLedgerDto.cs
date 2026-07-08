@@ -1,9 +1,13 @@
-﻿namespace WarehouseManagement.Application.Dtos.ProductDtos
+﻿namespace WarehouseManagement.Application.Dtos.StockDocumentDtos
 {
     public class FilterProductLedgerDto : SearchQueryRequest
     {
-        public Guid ProductId { get; set; }
-        public Guid WarehouseId { get; set; }
+        [Required(ErrorMessage = "شناسه محصول مقصد الزامی است.")]
+        public Guid? ProductId { get; set; }
+
+        [Required(ErrorMessage = "شناسه انبار  الزامی است.")]
+        public Guid? WarehouseId { get; set; }
+
         public DateTime? FromDate { get; set; }
         public DateTime? ToDate { get; set; }
     }

@@ -4,7 +4,7 @@
     {
         public WarehouseStockReportsGridifyMapper()
         {
-            AddMap("WarehouseName", x => x.WarehouseName);
+            AddMap("warehouseName", x => x.WarehouseName);
         }
     }
 }

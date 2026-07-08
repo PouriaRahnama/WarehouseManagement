@@ -58,7 +58,7 @@ public class ErrorHandlingMiddleware
             context.Response.ContentType = "application/json";
             context.Response.StatusCode = statusCode;
             await context.Response.WriteAsJsonAsync(OkApiResult<string>.Fail(
-                 null, statusCode, message));
+                 null, message));
         }
     }
 }

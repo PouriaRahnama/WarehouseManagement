@@ -4,8 +4,8 @@
     {
         public GetWarehouseNamesGridifyMapper()
         {
-            AddMap("Name", p => p.Name);
-            AddMap("WarehoseId", p => p.WarehouseId);
+            AddMap("name", p => p.Name);
+            AddMap("warehoseId", p => p.WarehouseId);
         }
     }
 }

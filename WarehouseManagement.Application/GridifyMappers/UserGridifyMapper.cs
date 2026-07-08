@@ -4,10 +4,10 @@
     {
         public UserGridifyMapper()
         {
-            AddMap("Phone", p => p.Phone);
-            AddMap("UserId", p => p.UserId);
-            AddMap("Username", p => p.Username);
-            AddMap("Role", p => p.Role);
+            AddMap("phone", p => p.Phone);
+            AddMap("userId", p => p.UserId);
+            AddMap("username", p => p.Username);
+            AddMap("role", p => p.Role);
         }
     }
 }

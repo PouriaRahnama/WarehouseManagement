@@ -4,9 +4,9 @@
     {
         public StockDocumentsGridifyMapper()
         {
-            AddMap("Name", p => p.Status);
-            AddMap("ProductId", p => p.Type);
-            AddMap("Code", p => p.Number);
+            AddMap("number", p => p.Number);
+            AddMap("status", p => p.Status);
+            AddMap("type", p => p.Type);
         }
     }
 

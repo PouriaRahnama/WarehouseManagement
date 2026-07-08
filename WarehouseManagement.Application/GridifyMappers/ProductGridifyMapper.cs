@@ -4,9 +4,9 @@
     {
         public ProductGridifyMapper()
         {
-            AddMap("Name", p => p.Name);
-            AddMap("ProductId", p => p.ProductId);
-            AddMap("Code", p => p.Code);
+            AddMap("name", p => p.Name);
+            AddMap("productId", p => p.ProductId);
+            AddMap("code", p => p.Code);
         }
     }
 

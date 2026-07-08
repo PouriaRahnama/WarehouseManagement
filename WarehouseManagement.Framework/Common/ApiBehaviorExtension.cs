@@ -13,7 +13,6 @@ public class ApiBehaviorExtension
 
         var response = OkApiResult<object>.Fail(
             null,
-            StatusCodes.Status400BadRequest,
             "اطلاعات ارسالی معتبر نیست"
         );
 

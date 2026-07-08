@@ -63,7 +63,8 @@
 
             foreach (var item in items)
             {
-                var dto = new  ProductLedgerItemReportDto(){
+                var dto = new ProductLedgerItemReportDto()
+                {
                     DocumentNumber = item.Item.StockDocument.Number,
                     DocumentType = item.Item.StockDocument.Type,
                     DateTime = item.CreatedDateTime
@@ -101,17 +102,18 @@
             var paging = result.AsQueryable().GridifyQueryable(queryParams,
                     new GridifyMapper<ProductLedgerItemReportDto>());
 
-            var pq = new Paging<ProductLedgerItemReportDto>(paging.Count,paging.Query);
+            var pq = new Paging<ProductLedgerItemReportDto>(paging.Count, paging.Query);
             return new SearchQueryResponse<ProductLedgerItemReportDto>(queryParams, pq);
         }
 
         public async Task<Guid> CreateInStockDocumentAsync(CreateInStockDocumentDto createInStockDocumentDto)
         {
+            if (createInStockDocumentDto.ToWarehouseId == Guid.Empty) throw new NotFoundException("شناسه انبار مقصد الزامی است.");
             var document = _mapper.Map<StockDocument>(createInStockDocumentDto);
             await _stockDocumentRepository.CreateAsync(document);
 
             var items = _mapper.Map<List<StockDocumentItem>>(
-            createInStockDocumentDto.Items,opt => opt.Items["StockDocumentId"] = document.Id);
+            createInStockDocumentDto.Items, opt => opt.Items["StockDocumentId"] = document.Id);
 
             await _stockDocumentItemRepository.CreateRangeAsync(items);
 
@@ -121,6 +123,7 @@
 
         public async Task<Guid> CreateOutStockDocumentAsync(CreateOutStockDocumentDto createOutStockDocumentDto)
         {
+            if (createOutStockDocumentDto.FromWarehouseId == Guid.Empty) throw new NotFoundException("شناسه انبار مبدا الزامی است.");
             var document = _mapper.Map<StockDocument>(createOutStockDocumentDto);
             await _stockDocumentRepository.CreateAsync(document);
 
@@ -134,6 +137,8 @@
 
         public async Task<Guid> CreateTransferStockDocumentAsync(CreateTransferStockDocumentDto createTransferStockDocumentDto)
         {
+            if (createTransferStockDocumentDto.FromWarehouseId == Guid.Empty) throw new NotFoundException("شناسه انبار مبدا الزامی است.");
+            if (createTransferStockDocumentDto.ToWarehouseId == Guid.Empty) throw new NotFoundException("شناسه انبار مقصد الزامی است.");
             var document = _mapper.Map<StockDocument>(createTransferStockDocumentDto);
             await _stockDocumentRepository.CreateAsync(document);
 

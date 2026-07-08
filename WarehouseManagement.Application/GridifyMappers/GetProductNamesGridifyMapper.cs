@@ -4,8 +4,8 @@
     {
         public GetProductNamesGridifyMapper()
         {
-            AddMap("Name", p => p.Name);
-            AddMap("ProductId", p => p.ProductId);
+            AddMap("name", p => p.Name);
+            AddMap("productId", p => p.ProductId);
         }
     }
 
