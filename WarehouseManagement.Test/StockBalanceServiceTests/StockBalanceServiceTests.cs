@@ -1,4 +1,4 @@
-﻿namespace WarehouseManagement.Test
+﻿namespace WarehouseManagement.Test.StockBalanceServiceTests
 {
     public class StockBalanceServiceTests
     {
@@ -13,7 +13,6 @@
             _mockRepo = new Mock<IStockBalanceRepository>();
             _mockMapper = new Mock<IMapper>();
 
-            // تزریق Mockها به سرویس
             _service = new StockBalanceService(
                 _mockUnitOfWork.Object,
                 _mockMapper.Object,
@@ -32,8 +31,8 @@
             _mockRepo.Setup(r => r.Entities).Returns(mockData);
 
             var items = new List<StockDocumentItem> {
-        new StockDocumentItem { ProductId = productId, Quantity = 3, Product = new Product { Name = "Test Product" } }
-    };
+                    new StockDocumentItem { ProductId = productId, Quantity = 3, Product = new Product { Name = "Test Product" } }
+                };
 
             // Act
             await _service.DecreaseStockBalanceAsync(items, warehouseId);

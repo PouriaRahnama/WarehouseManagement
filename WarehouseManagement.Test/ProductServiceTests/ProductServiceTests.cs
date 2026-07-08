@@ -1,6 +1,4 @@
-﻿using WarehouseManagement.Domain.Enums;
-
-namespace WarehouseManagement.Test.ProductServiceTests
+﻿namespace WarehouseManagement.Test.ProductServiceTests
 {
     public class ProductServiceTests
     {
@@ -9,7 +7,6 @@ namespace WarehouseManagement.Test.ProductServiceTests
         private readonly Mock<IUnitOfWork> _unitOfWorkMock;
         private readonly IMapper _mapper;
         private readonly ProductService _service;
-
         public ProductServiceTests()
         {
             var config = new MapperConfiguration(cfg =>
@@ -31,6 +28,16 @@ namespace WarehouseManagement.Test.ProductServiceTests
                     .ForMember(dest => dest.UnitOfMeasure, opt => opt.MapFrom(src => src.UnitOfMeasure))
                     .ForMember(dest => dest.IsActive, opt => opt.MapFrom(src => src.IsActive))
                     .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Name));
+
+
+                cfg.CreateMap<Product, GetAllProductsDto>()
+                    .ForMember(dest => dest.Code, opt => opt.MapFrom(src => src.Code))
+                    .ForMember(dest => dest.ProductId, opt => opt.MapFrom(src => src.Id))
+                    .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Name))
+                    .ForMember(dest => dest.UnitOfMeasure, opt => opt.MapFrom(src => src.UnitOfMeasure.GetDisplayName()))
+                    .ForMember(dest => dest.IsActive, opt => opt.MapFrom(src => src.IsActive))
+                    .ForMember(dest => dest.CreatedDateTime,
+                    opt => opt.MapFrom(src => EF.Property<DateTime?>(src, "CreatedDateTime")));
             });
 
             _mapper = config.CreateMapper();
@@ -151,10 +158,14 @@ namespace WarehouseManagement.Test.ProductServiceTests
                 ProductId = productId,
                 Name = "New Name",
                 MinimumStock = 20,
-                UnitOfMeasure = UnitOfMeasure.Box
+                UnitOfMeasure = UnitOfMeasure.Box,
+                IsActive = true
             };
 
             _productRepositoryMock.Setup(x => x.GetByIdAsync(productId)).ReturnsAsync(existingProduct);
+
+            _productRepositoryMock.Setup(x => x.Update(It.IsAny<Product>()));
+
             _unitOfWorkMock.Setup(x => x.SaveChangesAsync()).ReturnsAsync(1);
 
             // Act
@@ -194,4 +205,7 @@ namespace WarehouseManagement.Test.ProductServiceTests
         }
 
     }
+
+
+
 }

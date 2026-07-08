@@ -12,3 +12,7 @@ global using WarehouseManagement.Infrastructure.Repository.InterfacesRepository;
 global using WarehouseManagement.Infrastructure.UnitOfWork;
 global using Xunit;
 global using WarehouseManagement.Application.Dtos.ProductDtos;
+global using WarehouseManagement.Domain.Enums;
+global using Microsoft.EntityFrameworkCore;
+global using WarehouseManagement.Infrastructure.Persistence;
+global using WarehouseManagement.Infrastructure.Repository.EntitiesRepository;
