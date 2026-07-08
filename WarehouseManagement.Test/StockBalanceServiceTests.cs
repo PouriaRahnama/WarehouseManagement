@@ -1,20 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using AutoMapper;
-using FluentAssertions;
-using MockQueryable.Moq;
-using Moq;
-using WarehouseManagement.Application.Services;
-using WarehouseManagement.Domain.Entities;
-using WarehouseManagement.Framework.Common;
-using WarehouseManagement.Infrastructure.Repository.InterfacesRepository;
-using WarehouseManagement.Infrastructure.UnitOfWork;
-using Xunit;
-
-namespace WarehouseManagement.Test
+﻿namespace WarehouseManagement.Test
 {
-
     public class StockBalanceServiceTests
     {
         private readonly Mock<IUnitOfWork> _mockUnitOfWork;

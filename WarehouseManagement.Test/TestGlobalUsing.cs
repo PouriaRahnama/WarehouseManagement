@@ -1,0 +1,14 @@
+﻿global using System;
+global using System.Collections.Generic;
+global using System.Threading.Tasks;
+global using AutoMapper;
+global using FluentAssertions;
+global using MockQueryable.Moq;
+global using Moq;
+global using WarehouseManagement.Application.Services;
+global using WarehouseManagement.Domain.Entities;
+global using WarehouseManagement.Framework.Common;
+global using WarehouseManagement.Infrastructure.Repository.InterfacesRepository;
+global using WarehouseManagement.Infrastructure.UnitOfWork;
+global using Xunit;
+global using WarehouseManagement.Application.Dtos.ProductDtos;
