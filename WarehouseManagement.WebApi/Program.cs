@@ -1,8 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
-using WarehouseManagement.Domain.Enums;
-using WarehouseManagement.Infrastructure.Persistence;
-
-var builder = WebApplication.CreateBuilder(args);
+﻿var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
@@ -70,10 +66,16 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
-app.UseMiddleware<ErrorHandlingMiddleware>();
+
+app.UseSerilogRequestLogging();
+
 app.UseHttpsRedirection();
+
 app.UseAuthentication();
 app.UseAuthorization();
+
+app.UseMiddleware<ErrorHandlingMiddleware>();
+
 app.MapControllers();
 
 using (var scope = app.Services.CreateScope())
@@ -82,5 +84,4 @@ using (var scope = app.Services.CreateScope())
     db.Database.Migrate();
 }
 
-app.UseSerilogRequestLogging();
 app.Run();

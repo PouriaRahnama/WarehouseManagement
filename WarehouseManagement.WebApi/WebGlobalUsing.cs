@@ -19,8 +19,8 @@ global using WarehouseManagement.Infrastructure.Common;
 global using WarehouseManagement.WebApi.Configuration;
 global using WarehouseManagement.WebApi.Middlewares;
 global using WarehouseManagement.Application.Dtos.StockDocumentDtos;
-
-
+global using Microsoft.EntityFrameworkCore;
+global using WarehouseManagement.Infrastructure.Persistence;
 
 
 
