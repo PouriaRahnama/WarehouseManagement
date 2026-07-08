@@ -53,7 +53,7 @@
 
                         context.Response.StatusCode = StatusCodes.Status401Unauthorized;
                         context.Response.ContentType = "application/json";
-                        var result = OkApiResult<string>.Fail("توکن ارسال شده معتبر نمی باشد.");
+                        var result = OkApiResult<string>.Fail(null,"توکن ارسال شده معتبر نمی باشد.");
                         await context.Response.WriteAsync(System.Text.Json.JsonSerializer.Serialize(result));
                     },
                     OnForbidden = async context =>
@@ -61,7 +61,7 @@
                         context.Response.StatusCode = StatusCodes.Status403Forbidden;
                         context.Response.ContentType = "application/json";
 
-                        var result = OkApiResult<string>.Fail("عدم مجوز دسترسی");
+                        var result = OkApiResult<string>.Fail(null,"عدم مجوز دسترسی");
                         await context.Response.WriteAsync(System.Text.Json.JsonSerializer.Serialize(result));
                     }
                 };
