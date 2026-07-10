@@ -1,32 +1,44 @@
-﻿# سامانه مدیریت انبار (Warehouse Management System)
-این پروژه برای مدیریت موجودی انبار است که با استفاده از تکنولوژی های زیر پیاده‌سازی شده است.
-**ASP.NET Core 6**، **Entity Framework Core** و **SQL Server**
+# 📦 Warehouse Management System (WMS)
 
-##  ویژگی‌های فنی
-- **معماری =>  Clean Architecture
-برای جداسازی مسئولیت‌ها.
+![.NET](https://img.shields.io/badge/.NET-6.0-blueviolet?style=for-the-badge&logo=dotnet)
+![EF Core](https://img.shields.io/badge/EF_Core-Entity_Framework-green?style=for-the-badge)
+![SQL Server](https://img.shields.io/badge/SQL_Server-2019-red?style=for-the-badge&logo=microsoft-sql-server)
+![Architecture](https://img.shields.io/badge/Architecture-Clean_Architecture-orange?style=for-the-badge)
 
-- **یکپارچگی استفاده از => UnitOfWork(Transaction) 
-برای عملیات چندمرحله‌ای انبار.
-و انجام عملیات به صورت کامل یا هیچ و مدیریت صحت موجودی انبار
+یک سامانه قدرتمند و مدرن برای مدیریت هوشمند موجودی انبار، کنترل اسناد ورود و خروج و گزارش‌گیری دقیق کاردکس کالا.
 
-- **همزمانی پیاده‌سازی  => Optimistic Concurrency
-با استفاده از =>  `RowVersion`
+---
 
-### پیش‌نیازها
-- [.NET 6.0 SDK](https://dotnet.microsoft.com/download)
-- SQL Server 2019
+## 🏗 معماری و ویژگی‌های فنی (Technical Excellence)
 
-### ۱. تنظیمات کانکشن استرینگ
-فایل =>  `appsettings.json`
-را در پروژه  باز کرده و مقدار => `ConnectionStrings`
-را مطابق دیتابیس خود تنظیم کنید
+این پروژه با تمرکز بر **قابلیت نگهداری (Maintainability)** و **امنیت داده‌ها** طراحی شده است:
 
+*   **📐 Clean Architecture:** جداسازی کامل لایه‌ها (Domain, Application, Infrastructure, API) برای کاهش وابستگی‌ها و افزایش تست‌پذیری.
+*   **🛡 Data Integrity (Unit of Work):** استفاده از الگوی `UnitOfWork` و مدیریت `Transactions` برای تضمین اینکه عملیات‌های چندمرحله‌ای (مثل ثبت سند و به‌روزرسانی موجودی) یا به صورت کامل انجام شوند یا اصلاً انجام نشوند.
+*   **⚡ Concurrency Control:** پیاده‌سازی استراتژی **Optimistic Concurrency** با استفاده از `RowVersion` جهت جلوگیری از Race Condition و از دست رفتن داده‌ها هنگام دسترسی همزمان کاربران.
+*   **🔍 Advanced Filtering:** موتور فیلترینگ پویا برای جستجو در محصولات، اسناد و انبارها.
+
+---
+
+## 🛠 پیش‌نیازها (Prerequisites)
+
+برای اجرای روان پروژه، موارد زیر را نصب داشته باشید:
+- [**.NET 6.0 SDK**](https://dotnet.microsoft.com/download)
+- [**SQL Server 2019**](https://www.microsoft.com/en-us/sql-server/sql-server-downloads)
+
+---
+
+## 🚀 راهنمای راه‌اندازی (Setup Guide)
+
+### ۱. تنظیم پایگاه داده
+فایل `appsettings.json` را باز کرده و رشته اتصال (Connection String) را مطابق با تنظیمات سیستم خود تغییر دهید:
+```json
 {
   "ConnectionStrings": {
-        "defaultConnection": "Server=.\\MSSQLSERVER2019;Database=WarehouseManagementDb;Integrated Security=True;Encrypt=False;TrustServerCertificate=True"
-    }
+"defaultConnection": "Server=.\\MSSQLSERVER2019;Database=WarehouseManagementDb;Integrated Security=True;Encrypt=False;TrustServerCertificate=True"
+  }
 }
+
 
 ##  راهنمای اجرا
  پروژه و تنظیمات رو کامل انجام داده و پروژه را اجرا کنید دیتابیس  پروژه به صورت اتومات ایجاد می شود.
