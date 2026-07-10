@@ -6,7 +6,7 @@ public class ProductConfiguration : IEntityTypeConfiguration<Product>
     {
         builder.HasKey(x => x.Id);
         builder.ToTable("Products");
-        // builder.HasQueryFilter(x => !EF.Property<bool>(x, "IsDeleted"));
+        builder.HasQueryFilter(x => !EF.Property<bool>(x, "IsDeleted"));
 
         builder.Property(x => x.Name)
             .IsRequired()

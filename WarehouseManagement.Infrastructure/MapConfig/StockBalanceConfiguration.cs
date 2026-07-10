@@ -7,7 +7,7 @@ public class StockBalanceConfiguration : IEntityTypeConfiguration<StockBalance>
     {
         builder.HasKey(x => new { x.WarehouseId, x.ProductId });
         builder.ToTable("StockBalances");
-        //builder.HasQueryFilter(x => !EF.Property<bool>(x, "IsDeleted"));
+        builder.HasQueryFilter(x => !EF.Property<bool>(x, "IsDeleted"));
 
         builder.Property(x => x.Quantity)
              .IsRequired();

@@ -6,7 +6,7 @@ public class UserConfiguration : IEntityTypeConfiguration<User>
     {
         builder.HasKey(x => x.Id);
         builder.ToTable("Users");
-        //builder.HasQueryFilter(x => !EF.Property<bool>(x, "IsDeleted"));
+        builder.HasQueryFilter(x => !EF.Property<bool>(x, "IsDeleted"));
 
         builder.Property(x => x.Username)
           .IsRequired()

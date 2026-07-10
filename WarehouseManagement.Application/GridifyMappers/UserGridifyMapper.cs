@@ -7,7 +7,6 @@
             AddMap("phone", p => p.Phone);
             AddMap("userId", p => p.UserId);
             AddMap("username", p => p.Username);
-            AddMap("role", p => p.Role);
         }
     }
 }
