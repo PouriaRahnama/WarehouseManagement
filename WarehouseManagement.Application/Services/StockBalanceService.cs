@@ -42,8 +42,6 @@
             var stockBalances = await _stockBalanceRepository.Entities
                 .Where(x => x.WarehouseId == fromWarehouseId && productIds.Contains(x.ProductId)).ToListAsync();
 
-            var newStockBalances = new List<StockBalance>();
-
             foreach (var item in stockDocumentItems)
             {
                 var stock = stockBalances.FirstOrDefault(x => x.ProductId == item.ProductId);
@@ -53,8 +51,6 @@
 
                 else stock.Quantity -= item.Quantity;
             }
-
-            if (newStockBalances.Any()) await _stockBalanceRepository.CreateRangeAsync(newStockBalances);
         }
 
         public async Task TransferStockBalanceAsync(ICollection<StockDocumentItem> stockDocumentItems, Guid toWarehouseId, Guid fromWarehouseId)

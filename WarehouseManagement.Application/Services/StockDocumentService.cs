@@ -42,7 +42,7 @@
         {
             var query = _stockDocumentItemRepository.EntitiesAsNoTracking
                 .Include(x => x.StockDocument)
-                .Where(x => x.ProductId == queryParams.ProductId)
+                .Where(x => x.ProductId == queryParams.ProductId && x.StockDocument.Status == StockDocumentStatus.Posted)
                 .Where(x => x.StockDocument.FromWarehouseId == queryParams.WarehouseId ||
                 x.StockDocument.ToWarehouseId == queryParams.WarehouseId).AsQueryable();
 
@@ -209,7 +209,7 @@
             catch (Exception ex)
             {
                 await _unitOfWork.RollbackAsync();
-                throw new BusinessException($"عملیات با خطا مواجه شد.");
+                throw new BusinessException(ex.Message);
             }
         }
 
@@ -241,7 +241,7 @@
             catch (Exception ex)
             {
                 await _unitOfWork.RollbackAsync();
-                throw new BusinessException($"عملیات با خطا مواجه شد.");
+                throw new BusinessException(ex.Message);
             }
         }
 
@@ -251,7 +251,7 @@
             try
             {
                 var document = await _stockDocumentRepository.Entities
-                     .Include(x => x.StockDocumentItems)
+                     .Include(x => x.StockDocumentItems).ThenInclude(x => x.Product)
                      .FirstOrDefaultAsync(x => x.Id == stockDocumentId);
 
                 if (document == null) throw new NotFoundException("سند یافت نشد.");
@@ -273,7 +273,7 @@
             catch (Exception ex)
             {
                 await _unitOfWork.RollbackAsync();
-                throw new BusinessException($"عملیات با خطا مواجه شد.");
+                throw new BusinessException(ex.Message);
             }
         }
 
