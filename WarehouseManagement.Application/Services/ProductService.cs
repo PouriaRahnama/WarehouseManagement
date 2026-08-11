@@ -18,6 +18,10 @@
         {
             var product = _mapper.Map<Product>(createProductDto);
 
+            if (createProductDto.Image != null)
+                product.ImagePath = await Extensions
+                    .SaveImageAndGenerateName(createProductDto.Image, FilePaths.ProductImagePathSave);
+
             await _productRepository.CreateAsync(product);
             await _unitOfWork.SaveChangesAsync();
 
@@ -30,6 +34,9 @@
 
             if (existingProduct == null)
                 throw new NotFoundException("محصول مورد نظر یافت نشد");
+
+            if (!string.IsNullOrEmpty(existingProduct.ImagePath))
+                Extensions.DeleteFile(existingProduct.ImagePath, FilePaths.ProductImagePathSave);
 
             await _productRepository.DeleteAsync(productId);
             await _unitOfWork.SaveChangesAsync();
@@ -88,10 +95,20 @@
 
             _mapper.Map(updateProductDto, existingProduct);
 
+            if (updateProductDto.Image != null)
+            {
+                if (!string.IsNullOrEmpty(existingProduct.ImagePath))
+                    Extensions.DeleteFile(FilePaths.ProductImagePathSave, existingProduct.ImagePath);
+
+                existingProduct.ImagePath = await Extensions
+                  .SaveImageAndGenerateName(updateProductDto.Image, FilePaths.ProductImagePathSave);
+            }
+
             _productRepository.Update(existingProduct);
             await _unitOfWork.SaveChangesAsync();
 
             return true;
         }
+
     }
 }

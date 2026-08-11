@@ -1,7 +1,11 @@
-﻿namespace WarehouseManagement.Application.Common
+﻿using FluentValidation.AspNetCore;
+using WarehouseManagement.Application.Filters;
+
+namespace WarehouseManagement.Application.Common
 {
     public static class ApplicationStartup
     {
+        [Obsolete]
         public static void ApplicationConfigureServices(this IServiceCollection services, IConfiguration configuration)
         {
             #region DI ( Registeration Services )
@@ -24,70 +28,85 @@
             var jwtSettings = configuration.GetSection("JwtSettings");
 
             //// Add JWT Authentication
-            services.AddAuthentication(options =>
-            {
-                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-            }).AddJwtBearer(options =>
-            {
-                options.RequireHttpsMetadata = false;
-                options.SaveToken = true;
-                options.TokenValidationParameters = new TokenValidationParameters
-                {
-                    ClockSkew = TimeSpan.FromMinutes(5),
-                    ValidateIssuer = true,
-                    ValidateAudience = true,
-                    ValidateLifetime = true,
-                    ValidateIssuerSigningKey = true,
-                    ValidIssuer = jwtSettings["Issuer"],
-                    ValidAudience = jwtSettings["Audience"],
-                    IssuerSigningKey = new SymmetricSecurityKey(
-                         Encoding.UTF8.GetBytes(jwtSettings["Key"]))
-                };
+            //services.AddAuthentication(options =>
+            //{
+            //    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+            //    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            //}).AddJwtBearer(options =>
+            //{
+            //    options.RequireHttpsMetadata = false;
+            //    options.SaveToken = true;
+            //    options.TokenValidationParameters = new TokenValidationParameters
+            //    {
+            //        ClockSkew = TimeSpan.FromMinutes(5),
+            //        ValidateIssuer = true,
+            //        ValidateAudience = true,
+            //        ValidateLifetime = true,
+            //        ValidateIssuerSigningKey = true,
+            //        ValidIssuer = jwtSettings["Issuer"],
+            //        ValidAudience = jwtSettings["Audience"],
+            //        IssuerSigningKey = new SymmetricSecurityKey(
+            //             Encoding.UTF8.GetBytes(jwtSettings["Key"]))
+            //    };
 
-                options.Events = new JwtBearerEvents
-                {
-                    OnChallenge = async context =>
-                    {
-                        context.HandleResponse();
+            //    options.Events = new JwtBearerEvents
+            //    {
+            //        OnChallenge = async context =>
+            //        {
+            //            context.HandleResponse();
 
-                        context.Response.StatusCode = StatusCodes.Status401Unauthorized;
-                        context.Response.ContentType = "application/json";
-                        var result = OkApiResult<string>.Fail(null,"توکن ارسال شده معتبر نمی باشد.");
-                        await context.Response.WriteAsync(System.Text.Json.JsonSerializer.Serialize(result));
-                    },
-                    OnForbidden = async context =>
-                    {
-                        context.Response.StatusCode = StatusCodes.Status403Forbidden;
-                        context.Response.ContentType = "application/json";
+            //            context.Response.StatusCode = StatusCodes.Status401Unauthorized;
+            //            context.Response.ContentType = "application/json";
+            //            var result = OkApiResult<string>.Fail(null,"توکن ارسال شده معتبر نمی باشد.");
+            //            await context.Response.WriteAsync(System.Text.Json.JsonSerializer.Serialize(result));
+            //        },
+            //        OnForbidden = async context =>
+            //        {
+            //            context.Response.StatusCode = StatusCodes.Status403Forbidden;
+            //            context.Response.ContentType = "application/json";
 
-                        var result = OkApiResult<string>.Fail(null,"عدم مجوز دسترسی");
-                        await context.Response.WriteAsync(System.Text.Json.JsonSerializer.Serialize(result));
-                    }
-                };
-            });
+            //            var result = OkApiResult<string>.Fail(null,"عدم مجوز دسترسی");
+            //            await context.Response.WriteAsync(System.Text.Json.JsonSerializer.Serialize(result));
+            //        }
+            //    };
+            //});
 
-            services.AddAuthorization(options =>
-            {
-                options.FallbackPolicy = new AuthorizationPolicyBuilder()
-                .RequireAuthenticatedUser()
-                .Build();
+            //services.AddAuthorization(options =>
+            //{
+            //    options.FallbackPolicy = new AuthorizationPolicyBuilder()
+            //    .RequireAuthenticatedUser()
+            //    .Build();
 
-                options.AddPolicy(Policies.Admin, policy =>
-                    policy.RequireRole(nameof(UserRole.Admin)));
+            //    options.AddPolicy(Policies.Admin, policy =>
+            //        policy.RequireRole(nameof(UserRole.Admin)));
 
-                options.AddPolicy(Policies.Operator, policy =>
-                    policy.RequireRole(nameof(UserRole.Operator),
-                              nameof(UserRole.Admin)));
+            //    options.AddPolicy(Policies.Operator, policy =>
+            //        policy.RequireRole(nameof(UserRole.Operator),
+            //                  nameof(UserRole.Admin)));
 
-                options.AddPolicy(Policies.Viewer, policy =>
-                    policy.RequireRole(
-                            nameof(UserRole.Admin),
-                            nameof(UserRole.Operator),
-                            nameof(UserRole.Viewer)));
+            //    options.AddPolicy(Policies.Viewer, policy =>
+            //        policy.RequireRole(
+            //                nameof(UserRole.Admin),
+            //                nameof(UserRole.Operator),
+            //                nameof(UserRole.Viewer)));
 
-            });
+            //});
             #endregion
+
+
+            services.AddControllers(options =>
+            {
+                options.Filters.Add<InputSanitizationFilter>();
+                options.SuppressImplicitRequiredAttributeForNonNullableReferenceTypes = true;
+            })              
+           .AddFluentValidation(options =>
+           {
+               options.ImplicitlyValidateChildProperties = true;
+               options.ImplicitlyValidateRootCollectionElements = true;
+
+               options.RegisterValidatorsFromAssembly(
+                   Assembly.GetExecutingAssembly());
+           });
         }
     }
 }

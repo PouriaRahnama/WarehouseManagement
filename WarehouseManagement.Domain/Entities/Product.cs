@@ -16,6 +16,7 @@ public class Product : BaseEntity
     public int MinimumStock { get; set; } = 0;
     public UnitOfMeasure UnitOfMeasure { get; set; }
     public bool IsActive { get; set; } = false;
+    public string? ImagePath { get; set; }
 
     public ICollection<StockBalance> StockBalances { get; set; }
     public ICollection<StockDocumentItem> StockDocumentItems { get; set; }
