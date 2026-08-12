@@ -17,6 +17,7 @@ public class Product : BaseEntity
     public UnitOfMeasure UnitOfMeasure { get; set; }
     public bool IsActive { get; set; } = false;
     public string? ImagePath { get; set; }
+    public int Price { get; set; }
 
     public ICollection<StockBalance> StockBalances { get; set; }
     public ICollection<StockDocumentItem> StockDocumentItems { get; set; }

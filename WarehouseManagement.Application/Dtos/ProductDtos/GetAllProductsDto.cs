@@ -4,10 +4,12 @@
     {
         public Guid ProductId { get; set; }
         public string Name { get; set; }
+        public int Price { get; set; }
         public string Code { get; set; }
         public DateTime? CreatedDateTime { get; set; }
-        public string UnitOfMeasure { get; set; }
+        public int UnitOfMeasure { get; set; }
         public bool IsActive { get; set; }
         public string? ImagePath { get; set; }
+        public int MinimumStock { get;  set; }
     }
 }

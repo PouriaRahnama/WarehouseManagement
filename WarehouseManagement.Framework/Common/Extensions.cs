@@ -1,4 +1,10 @@
-﻿namespace WarehouseManagement.Framework.Common;
+﻿using Microsoft.AspNetCore.WebUtilities;
+using SixLabors.ImageSharp;
+using SixLabors.ImageSharp.Formats.Webp;
+using SixLabors.ImageSharp.Processing;
+
+
+namespace WarehouseManagement.Framework.Common;
 
 public static class Extensions
 {
@@ -254,6 +260,76 @@ public static class Extensions
         return userAgent;
     }
 
+
+    public static void AddWebpImageToServer(this IFormFile image, string fileName, string originalPath,
+        int? width = default,
+        int? height = default, string thumbPath = null, string deletefileName = null, bool checkImageContent = true)
+    {
+        if (image == null || string.IsNullOrEmpty(fileName)) return;
+
+        try
+        {
+            // 1. آماده‌سازی مسیرهای مطلق (Absolute Paths)
+            string root = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot");
+            string targetDir = Path.Combine(root, originalPath.TrimStart(Path.DirectorySeparatorChar, Path.AltDirectorySeparatorChar));
+
+            // 2. مدیریت حذف فایل‌های قدیمی
+            if (!string.IsNullOrEmpty(deletefileName))
+            {
+                string deletePath = Path.Combine(targetDir, deletefileName);
+                if (File.Exists(deletePath)) File.Delete(deletePath);
+
+                if (!string.IsNullOrEmpty(thumbPath))
+                {
+                    string thumbDir = Path.Combine(root, thumbPath.TrimStart(Path.DirectorySeparatorChar, Path.AltDirectorySeparatorChar));
+                    string deleteThumbPath = Path.Combine(thumbDir, deletefileName);
+                    if (File.Exists(deleteThumbPath)) File.Delete(deleteThumbPath);
+                }
+            }
+
+            // اطمینان از وجود پوشه اصلی
+            if (!Directory.Exists(targetDir)) Directory.CreateDirectory(targetDir);
+
+            // 3. آماده‌سازی نام فایل نهایی
+            string finalFileName = Path.GetFileNameWithoutExtension(fileName) + ".webp";
+            string finalFullPath = Path.Combine(targetDir, finalFileName);
+
+            // 4. پردازش تصویر با ImageSharp
+            using (var inputStream = image.OpenReadStream())
+            using (var img = Image.Load(inputStream))
+            {
+                // ذخیره تصویر اصلی (بدون تغییر سایز)
+                img.Save(finalFullPath, new WebpEncoder
+                {
+                    Quality = 80,
+                    Method = WebpEncodingMethod.BestQuality
+                });
+
+                // 5. تولید Thumbnail (اگر مشخص شده باشد)
+                if (!string.IsNullOrEmpty(thumbPath) && width.HasValue && height.HasValue)
+                {
+                    string thumbDir = Path.Combine(root, thumbPath.TrimStart(Path.DirectorySeparatorChar, Path.AltDirectorySeparatorChar));
+                    if (!Directory.Exists(thumbDir)) Directory.CreateDirectory(thumbDir);
+
+                    string thumbFullPath = Path.Combine(thumbDir, finalFileName);
+
+                    // نکته مهم: ایجاد یک کپی از تصویر اصلی برای تغییر سایز تا تصویر اصلی خراب نشود
+                    using (var thumbImg = img.Clone(x => x.Resize(width.Value, height.Value)))
+                    {
+                        thumbImg.Save(thumbFullPath, new WebpEncoder
+                        {
+                            Quality = 75 // کیفیت تامب‌نیل را کمی کمتر می‌کنیم تا حجم بسیار کم شود
+                        });
+                    }
+                }
+            }
+        }
+        catch (Exception ex)
+        {
+            // در محیط Production، این خطا را لاگ کنید (مثلاً با Serilog)
+            throw new Exception($"Error processing image: {ex.Message}", ex);
+        }
+    }
 
 }
 

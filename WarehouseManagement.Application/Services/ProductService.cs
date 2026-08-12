@@ -1,4 +1,8 @@
-﻿namespace WarehouseManagement.Application.Services
+﻿using System.Reflection.Metadata;
+using WarehouseManagement.Application.Dtos.ProductDtos;
+using WarehouseManagement.Domain.Entities;
+
+namespace WarehouseManagement.Application.Services
 {
     public class ProductService : IProductService
     {
@@ -18,9 +22,21 @@
         {
             var product = _mapper.Map<Product>(createProductDto);
 
+            //if (createProductDto.Image != null)
+            //    product.ImagePath = await Extensions
+            //        .SaveImageAndGenerateName(createProductDto.Image, FilePaths.ProductImagePathSave);
+
             if (createProductDto.Image != null)
-                product.ImagePath = await Extensions
-                    .SaveImageAndGenerateName(createProductDto.Image, FilePaths.ProductImagePathSave);
+            {
+                string imageNameWithoutExtension = Guid.NewGuid().ToString();
+
+                createProductDto.Image.AddWebpImageToServer(
+                    fileName: imageNameWithoutExtension,
+                    originalPath: FilePaths.ProductImages
+                );
+
+                product.ImagePath = imageNameWithoutExtension + ".webp";
+            }
 
             await _productRepository.CreateAsync(product);
             await _unitOfWork.SaveChangesAsync();
@@ -100,8 +116,17 @@
                 if (!string.IsNullOrEmpty(existingProduct.ImagePath))
                     Extensions.DeleteFile(FilePaths.ProductImagePathSave, existingProduct.ImagePath);
 
-                existingProduct.ImagePath = await Extensions
-                  .SaveImageAndGenerateName(updateProductDto.Image, FilePaths.ProductImagePathSave);
+                if (updateProductDto.Image != null)
+                {
+                    string imageNameWithoutExtension = Guid.NewGuid().ToString();
+
+                    updateProductDto.Image.AddWebpImageToServer(
+                        fileName: imageNameWithoutExtension,
+                        originalPath: FilePaths.ProductImages
+                    );
+
+                    existingProduct.ImagePath = imageNameWithoutExtension + ".webp";
+                }
             }
 
             _productRepository.Update(existingProduct);

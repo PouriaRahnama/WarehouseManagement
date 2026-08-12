@@ -2,9 +2,9 @@
 
 namespace WarehouseManagement.Application.Validators.ProductDtoValidators
 {
-    public class CreateProductDtoValidator : AbstractValidator<CreateProductDto>
+    public class UpdateProductDtoValidator : AbstractValidator<UpdateProductDto>
     {
-        public CreateProductDtoValidator()
+        public UpdateProductDtoValidator()
         {
             RuleFor(x => x.Name)
                 .NotEmpty()
@@ -24,8 +24,13 @@ namespace WarehouseManagement.Application.Validators.ProductDtoValidators
                 .IsInEnum()
                 .WithMessage("واحد اندازه‌گیری معتبر نیست.");
 
-            RuleFor(x => x.Price)
+            RuleFor(x => x.Price).NotEmpty().WithMessage("وارد کردن قیمت محصول الزامی است.")
+                .NotNull().WithMessage("وارد کردن قیمت محصول الزامی است.")
                 .GreaterThan(0).WithMessage("قیمت وارد شده باید معتبر و بزرگتر از صفر باشد.");
+
+            RuleFor(x => x.ProductId)
+                 .NotNull().WithMessage("شناسه محصول الزامی است.")
+                 .NotEmpty().WithMessage("شناسه محصول الزامی است.");
 
         }
     }
