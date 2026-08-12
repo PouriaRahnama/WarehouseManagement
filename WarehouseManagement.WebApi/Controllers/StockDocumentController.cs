@@ -11,7 +11,7 @@
         /// </summary>
         [HttpGet]
         [DisplayName("واکشی تمام سندها")]
-        [Authorize(Policy = Policies.Viewer)]
+        //[Authorize(Policy = Policies.Viewer)]
         public async Task<OkApiResult<SearchQueryResponse<GetAllStockDocumentsDto>>> GetAll([FromQuery] FilterStockDocumentsDto QueryParams)
         {
             return OkApiResult<SearchQueryResponse<GetAllStockDocumentsDto>>.Ok(await _stockDocumentService.GetAllAsync(QueryParams));
@@ -22,7 +22,7 @@
         /// </summary>
         [HttpGet]
         [DisplayName(" کاردکس یک کالا در بازه زمانی  ")]
-        [Authorize(Policy = Policies.Viewer)]
+        //[Authorize(Policy = Policies.Viewer)]
         public async Task<OkApiResult<SearchQueryResponse<ProductLedgerItemReportDto>>> GetProductLedgerReport(
             [FromQuery] FilterProductLedgerDto filterProductLedgerDto)
         {
@@ -35,7 +35,7 @@
         /// </summary>
         [HttpPost]
         [DisplayName(" ایجاد سند ورود کالا")]
-        [Authorize(Policy = Policies.Operator)]
+        //[Authorize(Policy = Policies.Operator)]
         public async Task<OkApiResult<Guid>> CreateIn([FromBody] CreateInStockDocumentDto createInStockDocumentDto)
         {
             return OkApiResult<Guid>.Ok(await _stockDocumentService.CreateInStockDocumentAsync(createInStockDocumentDto));
@@ -46,7 +46,7 @@
         /// </summary>
         [HttpPost]
         [DisplayName(" ایجاد سند خروج کالا")]
-        [Authorize(Policy = Policies.Operator)]
+        //[Authorize(Policy = Policies.Operator)]
         public async Task<OkApiResult<Guid>> CreateOut([FromBody] CreateOutStockDocumentDto createOutStockDocumentDto)
         {
             return OkApiResult<Guid>.Ok(await _stockDocumentService.CreateOutStockDocumentAsync(createOutStockDocumentDto));
@@ -57,7 +57,7 @@
         /// </summary>
         [HttpPost]
         [DisplayName(" ایجاد سند انتقال کالا")]
-        [Authorize(Policy = Policies.Operator)]
+        //[Authorize(Policy = Policies.Operator)]
         public async Task<OkApiResult<Guid>> CreateTransfer([FromBody] CreateTransferStockDocumentDto createTransferStockDocumentDto)
         {
             return OkApiResult<Guid>.Ok(await _stockDocumentService.CreateTransferStockDocumentAsync(createTransferStockDocumentDto));
@@ -68,7 +68,7 @@
         /// </summary>
         [HttpPost]
         [DisplayName(" ثبت نهایی سند ")]
-        [Authorize(Policy = Policies.Operator)]
+        //[Authorize(Policy = Policies.Operator)]
         public async Task<OkApiResult<bool>> Confirm([FromBody] StockDocumentIdDto stockDocumentIdDto)
         {
             return OkApiResult<bool>.Ok(await _stockDocumentService.PostAsync(stockDocumentIdDto));

@@ -16,7 +16,7 @@
                     .ForMember(dest => dest.Code, opt => opt.MapFrom(src => src.Code))
                     .ForMember(dest => dest.ProductId, opt => opt.MapFrom(src => src.Id))
                     .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Name))
-                    .ForMember(dest => dest.UnitOfMeasure, opt => opt.MapFrom(src => src.UnitOfMeasure.GetDisplayName()))
+                    .ForMember(dest => dest.UnitOfMeasure, opt => opt.MapFrom(src => src.UnitOfMeasure))
                     .ForMember(dest => dest.IsActive, opt => opt.MapFrom(src => src.IsActive))
                      .ForMember(dest => dest.CreatedDateTime,
                              opt => opt.MapFrom(src => EF.Property<DateTime?>(src, "CreatedDateTime")));
@@ -48,7 +48,7 @@
                 {
                     Id = Guid.NewGuid(),
                     Name = "Laptop",
-                    MinimumStock = 5,
+                    MinimumStock = 8,
                     UnitOfMeasure = UnitOfMeasure.Piece,
                     IsActive = true,
                     Code = "PRD-"
