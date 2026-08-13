@@ -24,6 +24,7 @@ public class ErrorHandlingMiddleware
 
             int statusCode = ex switch
             {
+                ForbiddenException => StatusCodes.Status403Forbidden,
                 NotFoundException => StatusCodes.Status404NotFound,
                 UnauthorizedException => StatusCodes.Status401Unauthorized,
                 BusinessException => StatusCodes.Status400BadRequest,
@@ -36,7 +37,10 @@ public class ErrorHandlingMiddleware
                     ex.Message.IsPersian() ? ex.Message : "درخواست ارسال شده نامعتبر است.",
 
                 StatusCodes.Status401Unauthorized =>
-                   ex.Message.IsPersian() ? ex.Message : "شما مجوز دسترسی به این بخش را ندارید. لطفاً وارد حساب کاربری خود شوید.",
+                   ex.Message.IsPersian() ? ex.Message : " لطفاً وارد حساب کاربری خود شوید.",
+
+                StatusCodes.Status403Forbidden =>
+                    ex.Message.IsPersian() ? ex.Message : " عدم مجوز دسترسی",
 
                 StatusCodes.Status404NotFound =>
                     ex.Message.IsPersian() ? ex.Message : "منبع یا اطلاعات مورد نظر یافت نشد.",
