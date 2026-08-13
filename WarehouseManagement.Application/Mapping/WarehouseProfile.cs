@@ -40,6 +40,7 @@
 
             CreateMap<StockBalance, WarehouseProductDto>()
                 .ForMember(dest => dest.Quantity, opt => opt.MapFrom(src => src.Quantity))
+                 .ForMember(dest => dest.UnitOfMeasure, opt => opt.MapFrom(src => src.Product.UnitOfMeasure))
                 .ForMember(dest => dest.ProductId, opt => opt.MapFrom(src => src.ProductId))
                 .ForMember(dest => dest.ProductName, opt => opt.MapFrom(src => src.Product.Name))
                 .ForMember(dest => dest.ProductCode, opt => opt.MapFrom(src => src.Product.Code))
