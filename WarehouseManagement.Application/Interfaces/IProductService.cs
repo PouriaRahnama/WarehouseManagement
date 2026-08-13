@@ -5,6 +5,7 @@
         Task<SearchQueryResponse<GetAllProductsDto>> GetAllAsync(FilterProductsDto QueryParams);
         Task<SearchQueryResponse<GetProductNamesDto>> GetProductNamesAsync(FilterProductsDto QueryParams);
         Task<GetProductDetailsDto> GetByIdAsync(Guid productId);
+        Task<bool> ChangeStatusAsync(Guid productId, bool result);
         Task<Guid> CreateAsync(CreateProductDto createProductDto);
         Task<bool> UpdateAsync(UpdateProductDto updateProductDto);
         Task<bool> DeleteAsync(Guid productId);

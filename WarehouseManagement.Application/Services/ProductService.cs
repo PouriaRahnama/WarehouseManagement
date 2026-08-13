@@ -1,8 +1,4 @@
-﻿using System.Reflection.Metadata;
-using WarehouseManagement.Application.Dtos.ProductDtos;
-using WarehouseManagement.Domain.Entities;
-
-namespace WarehouseManagement.Application.Services
+﻿namespace WarehouseManagement.Application.Services
 {
     public class ProductService : IProductService
     {
@@ -55,6 +51,20 @@ namespace WarehouseManagement.Application.Services
                 Extensions.DeleteFile(existingProduct.ImagePath, FilePaths.ProductImagePathSave);
 
             await _productRepository.DeleteAsync(productId);
+            await _unitOfWork.SaveChangesAsync();
+
+            return true;
+        }
+
+        public async Task<bool> ChangeStatusAsync(Guid productId,bool result)
+        {
+            var existingProduct = await _productRepository.GetByIdAsync(productId);
+
+            if (existingProduct == null)throw new NotFoundException("محصول مورد نظر یافت نشد");
+
+            existingProduct.IsActive = result;
+              
+            _productRepository.Update(existingProduct);
             await _unitOfWork.SaveChangesAsync();
 
             return true;

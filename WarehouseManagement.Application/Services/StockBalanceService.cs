@@ -88,5 +88,16 @@
 
         }
 
+        public async Task<bool> ExistsProductsInWarehouse(Guid productId, Guid warehouseId)
+        {
+            var isStockBalance = await _stockBalanceRepository.EntitiesAsNoTracking
+                   .Where(x => x.ProductId == productId && x.WarehouseId == warehouseId).FirstOrDefaultAsync();
+
+            if (isStockBalance != null && isStockBalance.Quantity >= 1)         
+                return true;        
+
+            return false;
+        }
+
     }
 }

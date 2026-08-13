@@ -6,13 +6,15 @@
         private readonly IStockBalanceService _stockBalanceService;
         private readonly IStockDocumentRepository _stockDocumentRepository;
         private readonly IStockDocumentItemRepository _stockDocumentItemRepository;
+        private readonly IProductService _productService;
         private readonly IMapper _mapper;
         public StockDocumentService(
             IUnitOfWork unitOfWork,
             IMapper mapper,
             IStockBalanceService stockBalanceService,
             IStockDocumentRepository stockDocumentRepository,
-            IStockDocumentItemRepository stockDocumentItemRepository
+            IStockDocumentItemRepository stockDocumentItemRepository,
+            IProductService productService
             )
         {
             _unitOfWork = unitOfWork;
@@ -20,6 +22,7 @@
             _stockBalanceService = stockBalanceService;
             _stockDocumentRepository = stockDocumentRepository;
             _stockDocumentItemRepository = stockDocumentItemRepository;
+            _productService = productService;
         }
 
 
@@ -229,8 +232,17 @@
                 await _stockBalanceService.IncreaseStockBalanceAsync(document.StockDocumentItems, document.ToWarehouseId.Value);
 
                 document.Status = StockDocumentStatus.Posted;
-
                 await _unitOfWork.SaveChangesAsync();
+
+                foreach (var item in document.StockDocumentItems)
+                {
+                    var result = await _stockBalanceService.ExistsProductsInWarehouse(item.ProductId, document.ToWarehouseId.Value);
+                    if (result == true)
+                        await _productService.ChangeStatusAsync(item.ProductId, true);
+                    else
+                        await _productService.ChangeStatusAsync(item.ProductId, false);
+                }
+
                 await _unitOfWork.CommitAsync();
             }
             catch (DbUpdateConcurrencyException)
@@ -261,8 +273,17 @@
                 await _stockBalanceService.DecreaseStockBalanceAsync(document.StockDocumentItems, document.FromWarehouseId.Value);
 
                 document.Status = StockDocumentStatus.Posted;
-
                 await _unitOfWork.SaveChangesAsync();
+
+                foreach (var item in document.StockDocumentItems)
+                {
+                    var result = await _stockBalanceService.ExistsProductsInWarehouse(item.ProductId, document.FromWarehouseId.Value);
+                    if (result == true)                 
+                        await _productService.ChangeStatusAsync(item.ProductId, true);
+                    else                  
+                        await _productService.ChangeStatusAsync(item.ProductId, false);                              
+                }
+
                 await _unitOfWork.CommitAsync();
             }
             catch (DbUpdateConcurrencyException)
