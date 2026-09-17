@@ -1,4 +1,6 @@
-﻿namespace WarehouseManagement.Application.Services
+﻿using WarehouseManagement.Application.Dtos.StockDocumentDtos;
+
+namespace WarehouseManagement.Application.Services
 {
     public class StockDocumentService : IStockDocumentService
     {
@@ -112,6 +114,12 @@
         public async Task<Guid> CreateInStockDocumentAsync(CreateInStockDocumentDto createInStockDocumentDto)
         {
             if (createInStockDocumentDto.ToWarehouseId == Guid.Empty) throw new NotFoundException("شناسه انبار مقصد الزامی است.");
+
+            var productIds = createInStockDocumentDto.Items.Select(i => i.ProductId).ToList();
+
+            if (productIds.Count != productIds.Distinct().Count())
+                throw new BusinessException("تعدادی از محصولات وارد شده تکراری می‌باشد.");
+
             var document = _mapper.Map<StockDocument>(createInStockDocumentDto);
             await _stockDocumentRepository.CreateAsync(document);
 
@@ -127,6 +135,12 @@
         public async Task<Guid> CreateOutStockDocumentAsync(CreateOutStockDocumentDto createOutStockDocumentDto)
         {
             if (createOutStockDocumentDto.FromWarehouseId == Guid.Empty) throw new NotFoundException("شناسه انبار مبدا الزامی است.");
+
+            var productIds = createOutStockDocumentDto.Items.Select(i => i.ProductId).ToList();
+
+            if (productIds.Count != productIds.Distinct().Count())
+                throw new BusinessException("تعدادی از محصولات وارد شده تکراری می‌باشد.");
+
             var document = _mapper.Map<StockDocument>(createOutStockDocumentDto);
             await _stockDocumentRepository.CreateAsync(document);
 
@@ -142,6 +156,12 @@
         {
             if (createTransferStockDocumentDto.FromWarehouseId == Guid.Empty) throw new NotFoundException("شناسه انبار مبدا الزامی است.");
             if (createTransferStockDocumentDto.ToWarehouseId == Guid.Empty) throw new NotFoundException("شناسه انبار مقصد الزامی است.");
+
+            var productIds = createTransferStockDocumentDto.Items.Select(i => i.ProductId).ToList();
+
+            if (productIds.Count != productIds.Distinct().Count())
+                throw new BusinessException("تعدادی از محصولات وارد شده تکراری می‌باشد.");
+
             var document = _mapper.Map<StockDocument>(createTransferStockDocumentDto);
             await _stockDocumentRepository.CreateAsync(document);
 
